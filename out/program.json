@@ -1,0 +1,248 @@
+{
+  "type": "program",
+  "content": "this",
+  "expression": [
+    {
+      "type": "function declaration",
+      "name": "one",
+      "params": [
+        "n"
+      ],
+      "tokenRange": [
+        1,
+        12
+      ],
+      "statement": [
+        {
+          "value": "return",
+          "length": 6,
+          "type": "word",
+          "kind": "keyword",
+          "position": 20,
+          "line": 2,
+          "start_col": 3,
+          "end_col": 8,
+          "token_num": 7
+        },
+        {
+          "value": "n",
+          "length": 1,
+          "type": "word",
+          "kind": "identifier",
+          "position": 27,
+          "line": 2,
+          "start_col": 10,
+          "end_col": 10,
+          "token_num": 8
+        },
+        {
+          "value": "*",
+          "length": 1,
+          "type": "star",
+          "kind": "operator",
+          "position": 29,
+          "line": 2,
+          "start_col": 12,
+          "end_col": 12,
+          "token_num": 9
+        },
+        {
+          "value": "2",
+          "length": 1,
+          "type": "number",
+          "kind": "numeric_lit",
+          "position": 31,
+          "line": 2,
+          "start_col": 14,
+          "end_col": 14,
+          "token_num": 10
+        },
+        {
+          "value": ";",
+          "length": 1,
+          "type": "semi_colon",
+          "kind": "operator",
+          "position": 32,
+          "line": 2,
+          "start_col": 15,
+          "end_col": 15,
+          "token_num": 11
+        }
+      ]
+    },
+    {
+      "type": "constant declaration",
+      "name": "a",
+      "tokenRange": [
+        13
+      ],
+      "statement": [
+        {
+          "value": "1",
+          "length": 1,
+          "type": "number",
+          "kind": "numeric_lit",
+          "position": 46,
+          "line": 4,
+          "start_col": 11,
+          "end_col": 11,
+          "token_num": 16
+        },
+        {
+          "value": "+",
+          "length": 1,
+          "type": "plus",
+          "kind": "operator",
+          "position": 48,
+          "line": 4,
+          "start_col": 13,
+          "end_col": 13,
+          "token_num": 17
+        },
+        {
+          "value": "2",
+          "length": 1,
+          "type": "number",
+          "kind": "numeric_lit",
+          "position": 50,
+          "line": 4,
+          "start_col": 15,
+          "end_col": 15,
+          "token_num": 18
+        },
+        {
+          "value": "*",
+          "length": 1,
+          "type": "star",
+          "kind": "operator",
+          "position": 52,
+          "line": 4,
+          "start_col": 17,
+          "end_col": 17,
+          "token_num": 19
+        },
+        {
+          "value": "2",
+          "length": 1,
+          "type": "number",
+          "kind": "numeric_lit",
+          "position": 54,
+          "line": 4,
+          "start_col": 19,
+          "end_col": 19,
+          "token_num": 20
+        },
+        {
+          "value": "+",
+          "length": 1,
+          "type": "plus",
+          "kind": "operator",
+          "position": 56,
+          "line": 4,
+          "start_col": 21,
+          "end_col": 21,
+          "token_num": 21
+        },
+        {
+          "value": "1",
+          "length": 1,
+          "type": "number",
+          "kind": "numeric_lit",
+          "position": 58,
+          "line": 4,
+          "start_col": 23,
+          "end_col": 23,
+          "token_num": 22
+        }
+      ]
+    },
+    null,
+    {
+      "type": "constant declaration",
+      "name": "b",
+      "tokenRange": [
+        24
+      ],
+      "statement": [
+        {
+          "value": "a",
+          "length": 1,
+          "type": "word",
+          "kind": "identifier",
+          "position": 71,
+          "line": 5,
+          "start_col": 11,
+          "end_col": 11,
+          "token_num": 27
+        },
+        {
+          "value": "+",
+          "length": 1,
+          "type": "plus",
+          "kind": "operator",
+          "position": 73,
+          "line": 5,
+          "start_col": 13,
+          "end_col": 13,
+          "token_num": 28
+        },
+        {
+          "value": "3",
+          "length": 1,
+          "type": "number",
+          "kind": "numeric_lit",
+          "position": 75,
+          "line": 5,
+          "start_col": 15,
+          "end_col": 15,
+          "token_num": 29
+        },
+        {
+          "value": "*",
+          "length": 1,
+          "type": "star",
+          "kind": "operator",
+          "position": 77,
+          "line": 5,
+          "start_col": 17,
+          "end_col": 17,
+          "token_num": 30
+        },
+        {
+          "value": "4",
+          "length": 1,
+          "type": "number",
+          "kind": "numeric_lit",
+          "position": 79,
+          "line": 5,
+          "start_col": 19,
+          "end_col": 19,
+          "token_num": 31
+        },
+        {
+          "value": "/",
+          "length": 1,
+          "type": "forward_slash",
+          "kind": "operator",
+          "position": 81,
+          "line": 5,
+          "start_col": 21,
+          "end_col": 21,
+          "token_num": 32
+        },
+        {
+          "value": "2",
+          "length": 1,
+          "type": "number",
+          "kind": "numeric_lit",
+          "position": 83,
+          "line": 5,
+          "start_col": 23,
+          "end_col": 23,
+          "token_num": 33
+        }
+      ]
+    },
+    null
+  ]
+}
