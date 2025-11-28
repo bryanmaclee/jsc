@@ -25,10 +25,10 @@ function dodat(g, h) {
   }
 }
 BEGIN;
-function one(n){
+function one(n) {
   return n * 2;
 }
 const a = 1 + 2 * 2 + 1;
-const b = a + 3 * 4 / 2;
-END;
+const b = a + (3 * 4) / 2;
 const pre = one(1) + 1;
+END;

@@ -17,19 +17,32 @@ import { Environment } from "./dep/env.js";
   await Bun.write(Files.outputFile, JSON.stringify(program, null, 2));
   // await Bun.write(Files.outputFile, JSON.stringify(progOut, null, 2));
 })();
-
+// global to thing
 function instanciateProgram(data) {
   return {
     type: "program",
     // envir: Environment(),
-    content: 'this',
+    content: "this",
     expression: parse(data),
   };
 }
 
 function parse(tokens) {
-    let iter = 0;
-    const statements = [];
+  let iter = 0;
+  const statements = [];
+  let token = eat();
+
+  console.log("new tokens loaded: ");
+
+  while (token && token.type !== "EOF") {
+    statements.push(fig(token));
+    token = eat();
+  }
+
+  if (tokens.length) tokens.forEach((token) => console.log(token.value));
+
+  if (!statements.length && tokens) return tokens;
+  return parse(statements);
 
   function eat(i = 1) {
     iter += i;
@@ -39,14 +52,6 @@ function parse(tokens) {
   function at() {
     return tokens[iter];
   }
-
-  let token = eat();
-
-  while (token.type !== "EOF") {
-    statements.push( fig(token));
-    token = eat();
-  }
-    return statements;
 
   function fig(token) {
     switch (token.type) {
@@ -63,46 +68,51 @@ function parse(tokens) {
       return cb(token);
     }
 
-    function constVar(){
-        const tokenRange = [token.token_num];   
-        let scp = 1;
-        const varName = eat();
-        const v = 1;
-        eat();
-        const stmt = [];
-        while (at().type !==  'semi_colon'){
+    function constVar() {
+      const tokenRange = [token.token_num];
+      let scp = 1;
+      const varName = eat();
+      const v = 1;
+      eat();
+      const stmt = [];
+      while (
+        at().type !== "semi_colon" &&
+        at() !== undefined &&
+        at().kind !== "keyword" &&
+        at().kind !== "EOF"
+      ) {
         stmt.push(eat());
-        }
+      }
 
-        return {
-            type: "constant declaration",
-            name: varName.value,
-            tokenRange: tokenRange,
-            statement: stmt,
-        };
+      return {
+        type: "constant declaration",
+        name: varName.value,
+        tokenRange: tokenRange,
+        statement: stmt,
+      };
     }
 
     function func(token) {
       // console.log(token)
       const tokenRange = [token.token_num];
       let scp = 1;
-      const stmt = []
-      const fnName  = eat()
+      const stmt = [];
+      const fnName = eat();
       eat();
-      let next = eat()
+      let next = eat();
       const params = [];
-      while (next.type !== 'close_paren'){
-        params.push(next.value)
-        next = eat()
-      } 
-      eat()
-      next = eat();
-      while (next.type !== 'close_curly' && scp !== 0){
-        console.log('in da loop', next.value)
-        stmt.push(next)
-        next = eat()
+      while (next.type !== "close_paren") {
+        params.push(next.value);
+        next = eat();
       }
-      tokenRange.push(next.token_num)
+      eat();
+      next = eat();
+      while (next.type !== "close_curly" && scp !== 0) {
+        // console.log("in da loop", next.value);
+        stmt.push(next);
+        next = eat();
+      }
+      tokenRange.push(next.token_num);
 
       return {
         type: "function declaration",
