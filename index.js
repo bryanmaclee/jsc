@@ -12,16 +12,21 @@ import { Environment } from "./dep/env.js";
   await Bun.write(Files.outputText, JSON.stringify(lexed, null, 2));
   const woWhite = lexed.filter((thing) => thing.kind !== "format");
   await Bun.write(Files.outputTrunk, JSON.stringify(woWhite, null, 2));
+  // const env = Environment();
   let program = instanciateProgram(woWhite);
   // const progOut = preStringify(program);
   await Bun.write(Files.outputFile, JSON.stringify(program, null, 2));
   // await Bun.write(Files.outputFile, JSON.stringify(progOut, null, 2));
 })();
-// global to thing
+
 function instanciateProgram(data) {
   return {
     type: "program",
-    // envir: Environment(),
+    // env: Environment(),
+    vars: {},
+    lets: {},
+    consts: {},
+    funcs: {},
     content: "this",
     expression: parse(data),
   };
@@ -32,17 +37,19 @@ function parse(tokens) {
   const statements = [];
   let token = eat();
 
-  console.log("new tokens loaded: ");
+  // console.log("new tokens loaded: ");
 
   while (token && token.type !== "EOF") {
     statements.push(fig(token));
     token = eat();
   }
 
-  if (tokens.length) tokens.forEach((token) => console.log(token.value));
+  // if (tokens.length) tokens.forEach((token) => console.log(token.value));
 
-  if (!statements.length && tokens) return tokens;
-  return parse(statements);
+  // if (!statements.length && tokens) return tokens;
+  // return parse(statements);
+
+  return statements;
 
   function eat(i = 1) {
     iter += i;
@@ -56,11 +63,24 @@ function parse(tokens) {
   function fig(token) {
     switch (token.type) {
       case "word":
-        switch (token.value) {
-          case "function":
-            return define(func, token);
-          case "const":
-            return define(constVar, token);
+        switch (token.kind) {
+          case "keyword":
+            switch (token.value) {
+              case "function":
+                return define(func, token);
+              case "const":
+                return define(constVar, token);
+              case "let":
+                return define(letVar, token);
+              default:
+                break;
+            }
+          case "identifier":
+            if (environment.Variables.has(token.value)) {
+              console.log("this is a var");
+            }
+
+            break;
         }
     }
 
@@ -68,22 +88,29 @@ function parse(tokens) {
       return cb(token);
     }
 
-    function constVar() {
+    function letVar(token) {
+      return token;
+    }
+
+    function constVar(token) {
       const tokenRange = [token.token_num];
       let scp = 1;
       const varName = eat();
       const v = 1;
       eat();
       const stmt = [];
+      let next = eat();
       while (
-        at().type !== "semi_colon" &&
-        at() !== undefined &&
-        at().kind !== "keyword" &&
-        at().kind !== "EOF"
+        next.type !== "semi_colon" &&
+        next !== undefined &&
+        next.kind !== "keyword" &&
+        next.kind !== "EOF"
       ) {
-        stmt.push(eat());
+        stmt.push(next);
+        next = eat();
       }
 
+      tokenRange.push(next.token_num);
       return {
         type: "constant declaration",
         name: varName.value,

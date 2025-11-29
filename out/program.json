@@ -1,5 +1,15 @@
 {
   "type": "program",
+  "env": {
+    "Lineage": [],
+    "Name": "global",
+    "Variables": {},
+    "UnUtilizedVars": {},
+    "Constants": {},
+    "Functions": {},
+    "FunctionStrs": {},
+    "Children": []
+  },
   "content": "this",
   "expression": [
     {
@@ -74,7 +84,8 @@
       "type": "constant declaration",
       "name": "a",
       "tokenRange": [
-        13
+        13,
+        23
       ],
       "statement": [
         {
@@ -156,12 +167,12 @@
         }
       ]
     },
-    null,
     {
       "type": "constant declaration",
       "name": "b",
       "tokenRange": [
-        24
+        24,
+        36
       ],
       "statement": [
         {
@@ -265,12 +276,12 @@
         }
       ]
     },
-    null,
     {
       "type": "constant declaration",
       "name": "pre",
       "tokenRange": [
-        37
+        37,
+        46
       ],
       "statement": [
         {
@@ -340,7 +351,6 @@
           "token_num": 45
         }
       ]
-    },
-    null
+    }
   ]
 }

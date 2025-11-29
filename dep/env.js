@@ -1,4 +1,3 @@
-
 export function Environment(e = false, name = "global") {
   const global = e ? false : true;
   const linAr = [];
@@ -22,15 +21,11 @@ export function Environment(e = false, name = "global") {
     if ((kind = "const")) {
       Constants.add(name);
     }
-    UnUtilizedVars.add(name)
+    UnUtilizedVars.add(name);
   }
 
-  function utilizeVar(name){
-    UnUtilizedVars.delete(name)
-  }
-
-  function getParent() {
-    return Parent;
+  function utilizeVar(name) {
+    UnUtilizedVars.delete(name);
   }
 
   function assignVar(name, value) {
@@ -38,7 +33,7 @@ export function Environment(e = false, name = "global") {
       console.log(`cannot reasign to constant ${name}`);
       return;
     }
-    console.log("got here. not the prob")
+    console.log("got here. not the prob");
     Variables.set(name, value);
   }
 
@@ -60,7 +55,6 @@ export function Environment(e = false, name = "global") {
     Children,
     declareVar,
     utilizeVar,
-    getParent,
     assignVar,
     assignFn,
   };
