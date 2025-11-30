@@ -24,11 +24,11 @@ function dodat(g, h) {
     const b = (c = d * 2);
   }
 }
-BEGIN;
 function one(n) {
   return n * 2;
 }
+BEGIN;
 const a = 1 + 2 * 2 + 1;
 const b = a + (3 * 4) / 2;
-const pre = one(1) + 1;
 END;
+const pre = one(1) + 1;
