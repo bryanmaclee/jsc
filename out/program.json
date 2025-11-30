@@ -9,7 +9,7 @@
         1,
         11
       ],
-      "statement": [
+      "expression": [
         {
           "value": "1",
           "length": 1,
@@ -97,107 +97,7 @@
         12,
         24
       ],
-      "statement": [
-        {
-          "value": "a",
-          "length": 1,
-          "type": "word",
-          "kind": "identifier",
-          "position": 36,
-          "line": 2,
-          "start_col": 11,
-          "end_col": 11,
-          "token_num": 15
-        },
-        {
-          "value": "+",
-          "length": 1,
-          "type": "plus",
-          "kind": "operator",
-          "position": 38,
-          "line": 2,
-          "start_col": 13,
-          "end_col": 13,
-          "token_num": 16
-        },
-        {
-          "value": "(",
-          "length": 1,
-          "type": "open_paren",
-          "kind": "operator",
-          "position": 40,
-          "line": 2,
-          "start_col": 15,
-          "end_col": 15,
-          "token_num": 17
-        },
-        {
-          "value": "3",
-          "length": 1,
-          "type": "number",
-          "kind": "numeric_lit",
-          "position": 41,
-          "line": 2,
-          "start_col": 16,
-          "end_col": 16,
-          "token_num": 18
-        },
-        {
-          "value": "*",
-          "length": 1,
-          "type": "star",
-          "kind": "operator",
-          "position": 43,
-          "line": 2,
-          "start_col": 18,
-          "end_col": 18,
-          "token_num": 19
-        },
-        {
-          "value": "4",
-          "length": 1,
-          "type": "number",
-          "kind": "numeric_lit",
-          "position": 45,
-          "line": 2,
-          "start_col": 20,
-          "end_col": 20,
-          "token_num": 20
-        },
-        {
-          "value": ")",
-          "length": 1,
-          "type": "close_paren",
-          "kind": "operator",
-          "position": 46,
-          "line": 2,
-          "start_col": 21,
-          "end_col": 21,
-          "token_num": 21
-        },
-        {
-          "value": "/",
-          "length": 1,
-          "type": "forward_slash",
-          "kind": "operator",
-          "position": 48,
-          "line": 2,
-          "start_col": 23,
-          "end_col": 23,
-          "token_num": 22
-        },
-        {
-          "value": "2",
-          "length": 1,
-          "type": "number",
-          "kind": "numeric_lit",
-          "position": 50,
-          "line": 2,
-          "start_col": 25,
-          "end_col": 25,
-          "token_num": 23
-        }
-      ]
+      "expression": "word"
     }
   ]
 }
