@@ -58,10 +58,11 @@ function parse(tokens, environment) {
    if (statements.length) {
       return statements;
    } else {
-      const evaluatedTokens = evaluate(tokens, environment);
-      if (evaluatedTokens) {
-         return evaluatedTokens;
-      }
+      // const evaluatedTokens = evaluate(tokens, environment);
+      // if (evaluatedTokens) {
+      //    return evaluatedTokens;
+      // }
+      console.log(tokens.length);
       return tokens;
    }
 
@@ -126,16 +127,26 @@ function parse(tokens, environment) {
          stmt.push(next);
          next = eat();
       }
+      stmt.push({ type: "(eof)" });
       // console.log(stmt);
       tokenRange.push(next.token_num);
-
-      return {
+      // console.log(JSON.stringify(Parser(parse(stmt, env)), null, 2));
+      // console.log(JSON.stringify(parse(stmt, env)), null, 2);
+      // console.log("the statement is: ", stmt);
+      const pars = Parser(parse(stmt, env));
+      // console.log(JSON.stringify(pars, null, 2));
+      // console.log(JSON.stringify(pars.prse(), null, 2));
+      const returnObj = {
          type: "constant declaration",
          name: varName.value,
          evaluated: false,
          tokenRange: tokenRange,
-         expression: parse(stmt, env),
+         // expression: Parser(parse(stmt, env)),
+         expression: pars.prse(),
       };
+      console.log(returnObj);
+      // const evtd = evaluate(returnObj, env)
+      return returnObj;
    }
 
    function func(token) {
@@ -174,12 +185,115 @@ function evaluate(expr, env) {
    // console.log(expr, env);
    for (const token of expr) {
       if (token.type === "word") {
-         if (!env.Variables.has(token.value)) return "word";
+         if (!env.Variables.has(token.value)) return expr;
       }
       // console.log(token);
    }
+
    return expr;
 }
+
+function Parser(tokens) {
+   // console.log(tokens);
+   let pos = 0;
+
+   function peek() {
+      return tokens[pos];
+   }
+
+   function next() {
+      return tokens[pos++];
+   }
+
+   // Precedence table
+   const PRECEDENCE = {
+      "+": 10,
+      "-": 10,
+      "*": 20,
+      "/": 20,
+   };
+
+   // null denotation (prefix or atom)
+   function nud(token) {
+      // if (/^[0-9]+$/.test(token.type)) {
+      //   return { type: "Literal", value: Number(token.value) };
+      // }
+      console.log(token);
+
+      if (token.type === "number") {
+         return { type: "Literal", value: Number(token.value) };
+      }
+
+      if (token.type === "word") {
+         return { type: "var", value: token.value };
+      }
+
+      if (token.value === "(") {
+         const expr = expression(0);
+         if (peek().type !== ")") throw "Expected ')'";
+         next(); // consume ')'
+         return expr;
+      }
+
+      if (token.value === "-") {
+         // unary prefix
+         const right = expression(100);
+         return { type: "UnaryExpression", operator: "-", argument: right };
+      }
+
+      throw "Unexpected token in nud(): " + token.type;
+   }
+
+   // left denotation (infix)
+   function led(left, token) {
+      if (["+", "-", "*", "/"].includes(token.value)) {
+         const right = expression(PRECEDENCE[token.value]);
+         return {
+            type: "BinaryExpression",
+            operator: token.value,
+            left,
+            right,
+         };
+      }
+
+      throw "Unexpected token in led(): " + token.type;
+   }
+
+   // core Pratt function
+   function expression(rbp) {
+      let t = next();
+      let left = nud(t);
+
+      while (rbp < lbp(peek())) {
+         t = next();
+         left = led(left, t);
+      }
+
+      return left;
+   }
+
+   function lbp(token) {
+      // console.log(token);
+      return PRECEDENCE[token.value] || 0;
+   }
+
+   return {
+      prse() {
+         return expression(0);
+      },
+   };
+}
+
+// ----------------------
+// Example
+// ----------------------
+const input = "1 + 2 * (3 - 4) / 2";
+const tokens = tokenize(input);
+
+// console.log(tokens);
+const parser = Parser(tokens.filter((thing) => thing.kind !== "format"));
+console.log(JSON.stringify(parser, null, 2));
+console.log(JSON.stringify(parser.prse(), null, 2));
 
 // const worker = new Worker(new URL("./worker.js", import.meta.url));
 // worker.postMessage("hello");
