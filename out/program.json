@@ -1,25 +1,83 @@
 {
   "type": "program",
-  "expression": [
+  "expr": [
     {
       "type": "constant declaration",
       "name": "a",
-      "evaluated": false,
+      "evaluated": 5.5,
       "tokenRange": [
         1,
-        11
+        13
       ],
-      "expression": {}
+      "expr": {
+        "op": "+",
+        "expr": {
+          "lhs": {
+            "op": "+",
+            "expr": {
+              "lhs": "1",
+              "rhs": {
+                "op": "*",
+                "expr": {
+                  "lhs": "2",
+                  "rhs": "2"
+                }
+              }
+            }
+          },
+          "rhs": {
+            "op": "/",
+            "expr": {
+              "lhs": "1",
+              "rhs": "2"
+            }
+          }
+        }
+      }
     },
     {
       "type": "constant declaration",
       "name": "b",
-      "evaluated": false,
+      "evaluated": 10,
       "tokenRange": [
-        12,
-        24
+        14,
+        26
       ],
-      "expression": {}
+      "expr": {
+        "op": "+",
+        "expr": {
+          "lhs": "4",
+          "rhs": {
+            "op": "/",
+            "expr": {
+              "lhs": {
+                "op": "*",
+                "expr": {
+                  "lhs": "3",
+                  "rhs": "4"
+                }
+              },
+              "rhs": "2"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "constant declaration",
+      "name": "c",
+      "evaluated": 55,
+      "tokenRange": [
+        27,
+        33
+      ],
+      "expr": {
+        "op": "*",
+        "expr": {
+          "lhs": "a",
+          "rhs": "b"
+        }
+      }
     }
   ]
 }

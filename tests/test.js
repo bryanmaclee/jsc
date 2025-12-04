@@ -28,7 +28,8 @@ function one(n) {
    return n * 2;
 }
 BEGIN;
-const a = 1 + 2 * 2 + 1;
+const a = 1 + 2 * 2 + 1 / 2;
 const b = 4 + (3 * 4) / 2;
+const c = a * b;
 END;
 const pre = one(1) + 1;
