@@ -1,4 +1,5 @@
 import { tokenize } from "./lexer.js";
+import { type_checker } from "./typechecker.js";
 import { ditchWhite } from "./lib.js";
 
 // const exp = ditchWhite(tokenize("10 + 4 / 2"));
@@ -148,17 +149,19 @@ export function parse(tokens, environment) {
       const pars = parser(stmt.reverse());
       const evald = isEvalable(pars.expr, pars.op, env);
       if (evald) env.Variables.set(varName.value, evald);
-      const returnObj = {
-         type: "constant declaration",
-         name: varName.value,
-         evaluated: evald,
-         tokenRange: tokenRange,
-         expr: pars,
-      };
-      return returnObj;
+      return type_checker(
+         {
+            type: "constant declaration",
+            name: varName.value,
+            evaluated: evald,
+            tokenRange: tokenRange,
+            expr: pars,
+         },
+         env,
+      );
    }
 
-   function func(token) {
+   function func(token, env) {
       const tokenRange = [token.token_num];
       let scp = 1;
       const stmt = [];
@@ -178,13 +181,16 @@ export function parse(tokens, environment) {
       }
       tokenRange.push(next.token_num);
 
-      return {
-         type: "function declaration",
-         name: fnName.value,
-         params: params,
-         tokenRange: tokenRange,
-         expr: stmt,
-      };
+      return type_checker(
+         {
+            type: "function declaration",
+            name: fnName.value,
+            params: params,
+            tokenRange: tokenRange,
+            expr: stmt,
+         },
+         env,
+      );
    }
 }
 
@@ -209,7 +215,7 @@ export function parser(tokens) {
    function parseExpr(tkns, mbp = 0) {
       // console.log(tkns);
       let lhs = next().value;
-      // console.log("left: ", lhs);
+      console.log("left: ", lhs);
       if (lhs === "(") {
          lhs = parseExpr(tkns);
          next();

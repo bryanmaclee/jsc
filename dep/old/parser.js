@@ -173,4 +173,14 @@ export function parser(tokens) {
    return parseExpr(tokens);
 }
 
-function typeChecker(program, env) {}
+function typeChecker(program, env) {
+   for (const stmt of program.expr) {
+      console.log(stmt);
+      if (stmt.type === "constant declaration") {
+         if (stmt.evaluated) {
+            env.types.set(stmt.name, typeof stmt.evaluated);
+         }
+      }
+   }
+   console.log(env);
+}

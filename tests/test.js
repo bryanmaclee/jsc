@@ -27,9 +27,10 @@ function dodat(g, h) {
 function one(n) {
    return n * 2;
 }
-BEGIN;
 const a = 1 + 2 * 2 + 1 / 2;
 const b = 4 + (3 * 4) / 2;
 const c = a * b;
+BEGIN;
+const d = "str";
 END;
 const pre = one(1) + 1;
