@@ -19,27 +19,21 @@ export function Environment(e = false, name = "global", type = "global") {
    const Types = new Map();
    const Children = [];
 
-   function declareVar(name, value, kind) {
-      Variables.set(name, value);
-      if ((kind = "const")) {
+   function declareVar(name, kind) {
+      if (kind === "const") {
          Constants.add(name);
       } else if (kind === "var") {
          DumbVars.add(name);
-         hoistVar(name, value, Lineage);
+         // hoistVar(name, value, Lineage);
       }
       UnUtilizedVars.add(name);
    }
 
-   function utilizeVar(name) {
-      UnUtilizedVars.delete(name);
-   }
-
    function assignVar(name, value) {
-      if (Constants.has(name)) {
+      if (Constants.has(name) && Variables.has(name)) {
          console.log(`cannot reasign to constant ${name}`);
          return;
       }
-      console.log("got here. not the prob");
       Variables.set(name, value);
    }
 
@@ -50,8 +44,14 @@ export function Environment(e = false, name = "global", type = "global") {
       Functions.add(name);
    }
 
+   function getVar(name) {
+      UnUtilizedVars.delete(name);
+      return Variables.get(name);
+   }
+
    return {
       Lineage,
+      Type,
       Name,
       Variables,
       UnUtilizedVars,
@@ -62,7 +62,7 @@ export function Environment(e = false, name = "global", type = "global") {
       Types,
       Children,
       declareVar,
-      utilizeVar,
+      getVar,
       assignVar,
       assignFn,
    };

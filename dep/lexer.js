@@ -1,4 +1,5 @@
 import { Tokens, operator } from "./syntax";
+import { access } from "./lib.js";
 
 export function tokenize(src) {
    const tokens = [];
@@ -53,7 +54,7 @@ export function tokenize(src) {
    }
 
    function add(value, type, kind, addTok = true) {
-      tokens.push({
+      access.tokens.push({
          value,
          length: value.length,
          type,
@@ -94,11 +95,11 @@ export function tokenize(src) {
          inc();
          if (usefullVar === "l") {
             char = 1;
-            add(chunk, "new_line", "format", false);
+            add(chunk, "new_line", "format");
             lineStartPos = itter;
             line++;
          } else {
-            add(chunk, "white_space", "format", false);
+            add(chunk, "white_space", "format");
          }
          continue;
       } else if (operator.has(chunk)) {
@@ -128,5 +129,5 @@ export function tokenize(src) {
       return tokens;
    }
    add("EOF", "EOF", "EOF");
-   return tokens;
+   // return tokens;
 }

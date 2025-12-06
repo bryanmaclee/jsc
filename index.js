@@ -4,21 +4,12 @@ import {
    deps,
    preStringify,
    ditchWhite,
+   access,
 } from "./dep/lib";
 import { tokenize } from "./dep/lexer";
 import { Environment } from "./dep/env.js";
 import { parse } from "./dep/parser.js";
 import { output } from "./dep/output.js";
-
-const access = {
-   vars: {},
-   lets: {},
-   consts: {},
-   funcs: {},
-   lins: {},
-   tmp: null,
-   lineage: ["global"],
-};
 
 const globalEnv = Environment();
 
@@ -26,11 +17,14 @@ const globalEnv = Environment();
    const datastr = await Bun.file(Files.testFile()).text();
    const data = truncateInput(datastr);
    console.log(data);
-   const lexed = tokenize(data);
-   await Bun.write(Files.outputText, JSON.stringify(lexed, null, 2));
-   const woWhite = lexed.filter((thing) => thing.kind !== "format");
-   await Bun.write(Files.outputTrunk, JSON.stringify(woWhite, null, 2));
-   let program = instanciateProgram(woWhite, globalEnv);
+   // const lexed = tokenize(data);
+   tokenize(data);
+   await Bun.write(Files.outputText, JSON.stringify(access.tokens, null, 2));
+   // const woWhite = lexed.filter((thing) => thing.kind !== "format");
+   access.trunc = access.tokens.filter((thing) => thing.kind !== "format");
+   await Bun.write(Files.outputTrunk, JSON.stringify(access.trunc, null, 2));
+   let program = instanciateProgram(access.tokens, globalEnv);
+   console.log(globalEnv);
    const out = output(program);
    await Bun.write(Files.programFile, out);
    // const progOut = preStringify(program);

@@ -1,9 +1,6 @@
-import { tokenize } from "./lexer.js";
 import { type_checker } from "./typechecker.js";
-import { ditchWhite } from "./lib.js";
+import { Environment } from "./env.js";
 
-// const exp = ditchWhite(tokenize("10 + 4 / 2"));
-// console.log("parsed: ", JSON.stringify(parser(exp.reverse())));
 const runTests = false;
 
 export function parse(tokens, environment) {
@@ -24,11 +21,14 @@ export function parse(tokens, environment) {
    }
 
    function eat(i = 1) {
+      // console.log(tokens[iter]);
+      while (tokens[iter].kind === "format") iter++;
       iter += i;
       return tokens[iter - 1];
    }
 
    function at() {
+      while (tokens[iter].kind === "format") iter++;
       return tokens[iter];
    }
 
@@ -39,13 +39,17 @@ export function parse(tokens, environment) {
                case "keyword":
                   switch (token.value) {
                      case "function":
-                        return define(func, token);
+                        return define(func, token, env);
                      case "const":
                      case "let":
                      case "var":
+                     case "lin":
                         return define(vars, token, env);
                      default:
                         break;
+                  }
+                  if (env.Functions.has(token.value)) {
+                     return define(fn_call, token, env);
                   }
             }
          default:
@@ -57,11 +61,12 @@ export function parse(tokens, environment) {
       return cb(token, env);
    }
 
-   function letVar(token) {
+   function fn_call(token) {
       return token;
    }
 
    function vars(token, env) {
+      // console.log(token.value);
       const tokenRange = [token.token_num];
       const varName = eat();
       eat();
@@ -73,6 +78,12 @@ export function parse(tokens, environment) {
          next.kind !== "keyword" &&
          next.kind !== "EOF"
       ) {
+         // console.log(stmt);
+         if (next.type === "word") {
+            if (env.Functions.has(next.value)) {
+               console.log("DEFINITELY A CALL");
+            }
+         }
          stmt.push(next);
          next = eat();
       }
@@ -81,10 +92,16 @@ export function parse(tokens, environment) {
       const toBun = passToBun(stmt, env);
       // const pars = parser(stmt.reverse());
       // const evald = isEvalable(pars.expr, pars.op, env);
-      if (toBun) env.declareVar(varName.value, toBun, token.kind);
+      env.declareVar(varName.value, token.value);
+      if (toBun) {
+         env.assignVar(varName.value, toBun);
+      } else {
+         env.assignVar(varName.value, undefined);
+      }
+      // console.log(env);
       return type_checker(
          {
-            type: "constant declaration",
+            type: `${token.value}_declaration`,
             name: varName.value,
             evaluated: toBun,
             tokenRange: tokenRange,
@@ -110,13 +127,20 @@ export function parse(tokens, environment) {
       next = eat();
       while (next.type !== "close_curly" && scp !== 0) {
          stmt.push(next);
+         if (next.value === "}") scp--;
+         else if (next.value === "{") scp++;
          next = eat();
       }
+      stmt.push({ type: "EOF" });
+      const newEnv = Environment(env, fnName.value, "function");
+      console.log("back into parse");
+      parse(stmt, newEnv);
+      env.Children.push(newEnv);
       tokenRange.push(next.token_num);
-
+      env.assignFn(fnName.value);
       return type_checker(
          {
-            type: "function declaration",
+            type: "function_declaration",
             name: fnName.value,
             params: params,
             tokenRange: tokenRange,
@@ -128,12 +152,13 @@ export function parse(tokens, environment) {
 }
 
 export function passToBun(tokens, env) {
+   // console.log(env);
    let evalStr = "";
    for (const token of tokens) {
       if (token.type !== "EOF") {
          if (token.kind === "identifier") {
             if (env.Variables.has(token.value)) {
-               evalStr += env.Variables.get(token.value);
+               evalStr += env.getVar(token.value);
             } else {
                return false;
             }

@@ -8,7 +8,7 @@ function userCard() {
    </div>;
 
    // <p>yo</p>
-
+// new comment
    const styles = {
       border: "2px solid purple",
    };
@@ -26,12 +26,14 @@ function dodat(g, h) {
 }
 BEGIN;
 function one(n) {
+   if (n > 0){
    return n * 2;
+   }
 }
 const a = 1 + 2 * 2 + 1 / 2;
-const b = 4 + (3 * 4) / 2;
-const d = "str thie";
+const     b = 4 + (3 * 4) / 2;
 let e = "str" + "ing";
 var c = a * b;
-END;
 const pre = one(1) + 1;
+END;
+lin d = "str thie";

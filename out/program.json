@@ -2,14 +2,14 @@
   "type": "program",
   "expr": [
     {
-      "type": "function declaration",
+      "type": "function_declaration",
       "name": "one",
       "params": [
         "n"
       ],
       "tokenRange": [
         1,
-        12
+        22
       ],
       "expr": [
         {
@@ -21,7 +21,7 @@
           "line": 2,
           "start_col": 4,
           "end_col": 9,
-          "token_num": 7
+          "token_num": 13
         },
         {
           "value": "n",
@@ -32,7 +32,7 @@
           "line": 2,
           "start_col": 11,
           "end_col": 11,
-          "token_num": 8
+          "token_num": 15
         },
         {
           "value": "*",
@@ -43,7 +43,7 @@
           "line": 2,
           "start_col": 13,
           "end_col": 13,
-          "token_num": 9
+          "token_num": 17
         },
         {
           "value": "2",
@@ -54,7 +54,7 @@
           "line": 2,
           "start_col": 15,
           "end_col": 15,
-          "token_num": 10
+          "token_num": 19
         },
         {
           "value": ";",
@@ -65,53 +65,53 @@
           "line": 2,
           "start_col": 16,
           "end_col": 16,
-          "token_num": 11
+          "token_num": 20
         }
       ]
     },
     {
-      "type": "constant declaration",
+      "type": "const_declaration",
       "name": "a",
       "evaluated": 5.5,
       "tokenRange": [
-        13,
-        25
+        24,
+        47
       ]
     },
     {
-      "type": "constant declaration",
+      "type": "const_declaration",
       "name": "b",
       "evaluated": 10,
       "tokenRange": [
-        26,
-        38
+        49,
+        74
       ]
     },
     {
-      "type": "constant declaration",
-      "name": "d",
-      "evaluated": "\"str thie\"",
-      "tokenRange": [
-        39,
-        43
-      ]
-    },
-    {
-      "type": "constant declaration",
+      "type": "let_declaration",
       "name": "e",
       "evaluated": "\"string\"",
       "tokenRange": [
-        44,
-        50
+        76,
+        87
       ]
     },
     {
-      "type": "constant declaration",
+      "type": "var_declaration",
       "name": "c",
       "evaluated": 55,
       "tokenRange": [
-        51,
-        57
+        89,
+        100
+      ]
+    },
+    {
+      "type": "const_declaration",
+      "name": "pre",
+      "evaluated": false,
+      "tokenRange": [
+        102,
+        116
       ]
     }
   ]

@@ -1,5 +1,10 @@
 import { tokenTypes } from "../dep/syntax";
 
+export const access = {
+   tokens: [],
+   trunc: [],
+};
+
 export function ditchWhite(str) {
    return str.filter((thing) => thing.kind !== "format");
 }
@@ -43,7 +48,7 @@ export function preStringify(data) {
       rVal.FunctionStrs = Object.fromEntries(data.envir.FunctionStrs);
       data.envir = rVal;
    }
-   console.log(data);
+   // console.log(data);
    if ("expression" in data) {
       if (data.expression) {
          if (data.expression.length) {
