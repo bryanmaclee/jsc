@@ -10,9 +10,6 @@ export function parse(tokens, environment) {
    let iter = 0;
    const statements = [];
    let token = eat();
-   // console.log(token);
-
-   // console.log("new tokens loaded: ");
 
    while (token && token.type !== "EOF") {
       const stmt = fig(token, environment);
@@ -20,18 +17,9 @@ export function parse(tokens, environment) {
       token = eat();
    }
 
-   // if (tokens.length) tokens.forEach((token) => console.log(token.value));
-
-   // if (!statements.length && tokens) return tokens;
-   // return parse(statements);
    if (statements.length) {
       return statements;
    } else {
-      // const evaluatedTokens = evaluate(tokens, environment);
-      // if (evaluatedTokens) {
-      //    return evaluatedTokens;
-      // }
-      console.log(tokens.length);
       return tokens;
    }
 
@@ -53,18 +41,12 @@ export function parse(tokens, environment) {
                      case "function":
                         return define(func, token);
                      case "const":
-                        return define(constVar, token, env);
                      case "let":
-                        return define(letVar, token);
+                     case "var":
+                        return define(vars, token, env);
                      default:
                         break;
                   }
-               // case "identifier":
-               //   if (environment.Variables.has(token.value)) {
-               //     console.log("this is a var");
-               //   }
-               //
-               //   break;
             }
          default:
             return false;
@@ -79,59 +61,9 @@ export function parse(tokens, environment) {
       return token;
    }
 
-   function isEvalable(expr, op, env) {
-      let lhs, rhs;
-      if ((expr.lhs && expr.lhs.expr) || (expr.rhs && expr.rhs.expr)) {
-         if (expr.lhs && expr.lhs.expr) {
-            lhs = isEvalable(expr.lhs.expr, expr.lhs.op, env);
-         } else {
-            lhs = Number(expr.lhs);
-            if (isNaN(lhs)) return false;
-         }
-         if (expr.rhs && expr.rhs.expr) {
-            rhs = isEvalable(expr.rhs.expr, expr.rhs.op, env);
-         } else {
-            rhs = Number(expr.rhs);
-            if (isNaN(rhs)) return false;
-         }
-      } else {
-         rhs = Number(expr.rhs);
-         lhs = Number(expr.lhs);
-         if (isNaN(rhs) || isNaN(rhs)) {
-            if (env.Variables.has(expr.lhs)) {
-               lhs = env.Variables.get(expr.lhs);
-            }
-            if (env.Variables.has(expr.rhs)) {
-               rhs = env.Variables.get(expr.rhs);
-            }
-         }
-      }
-      const evd = evaluateBinExp(lhs, rhs, op);
-      return evd ? evd : false;
-   }
-
-   // function typeChecker
-
-   function evaluateBinExp(lhs, rhs, op) {
-      switch (op) {
-         case "+":
-            return lhs + rhs;
-         case "-":
-            return lhs - rhs;
-         case "*":
-            return lhs * rhs;
-         case "/":
-            return lhs / rhs;
-         default:
-            return false;
-      }
-   }
-
-   function constVar(token, env) {
+   function vars(token, env) {
       const tokenRange = [token.token_num];
-      // let scp = 1;
       const varName = eat();
-      // const v = 1;
       eat();
       const stmt = [];
       let next = eat();
@@ -146,16 +78,17 @@ export function parse(tokens, environment) {
       }
       stmt.push({ type: "EOF" });
       tokenRange.push(next.token_num);
-      const pars = parser(stmt.reverse());
-      const evald = isEvalable(pars.expr, pars.op, env);
-      if (evald) env.Variables.set(varName.value, evald);
+      const toBun = passToBun(stmt, env);
+      // const pars = parser(stmt.reverse());
+      // const evald = isEvalable(pars.expr, pars.op, env);
+      if (toBun) env.declareVar(varName.value, toBun, token.kind);
       return type_checker(
          {
             type: "constant declaration",
             name: varName.value,
-            evaluated: evald,
+            evaluated: toBun,
             tokenRange: tokenRange,
-            expr: pars,
+            // expr: pars,
          },
          env,
       );
@@ -194,48 +127,114 @@ export function parse(tokens, environment) {
    }
 }
 
-export function parser(tokens) {
-   let pos = 0;
-
-   function peak() {
-      return tokens[tokens.length - 1];
-   }
-
-   function next() {
-      return tokens.pop();
-   }
-
-   const precedence = {
-      "+": [10, 11],
-      "-": [10, 11],
-      "*": [20, 21],
-      "/": [20, 21],
-   };
-
-   function parseExpr(tkns, mbp = 0) {
-      // console.log(tkns);
-      let lhs = next().value;
-      console.log("left: ", lhs);
-      if (lhs === "(") {
-         lhs = parseExpr(tkns);
-         next();
+export function passToBun(tokens, env) {
+   let evalStr = "";
+   for (const token of tokens) {
+      if (token.type !== "EOF") {
+         if (token.kind === "identifier") {
+            if (env.Variables.has(token.value)) {
+               evalStr += env.Variables.get(token.value);
+            } else {
+               return false;
+            }
+         } else {
+            evalStr += token.value;
+         }
       }
-      while (true) {
-         // console.log("left: ", lhs, "\npeak: ", peak().value);
-         let op = peak();
-         // console.log(op);
-         if (op.type === "EOF" || op.value === ")") break;
-         const [lbp, rbp] = precedence[op.value];
-         if (lbp < mbp) break;
-         next();
-         // console.log("lets recur shall we");
-         let rhs = parseExpr(tkns, rbp);
-         lhs = { op: op.value, expr: { lhs: lhs, rhs: rhs } };
-      }
-      return lhs;
    }
-   return parseExpr(tokens);
+   let evaluation = eval(evalStr);
+   if (typeof evaluation === "string") {
+      evaluation = '"' + evaluation + '"';
+   }
+   return evaluation;
 }
+
+// export function parser(tokens) {
+//    let pos = 0;
+//
+//    function peak() {
+//       return tokens[tokens.length - 1];
+//    }
+//
+//    function next() {
+//       return tokens.pop();
+//    }
+//
+//    const precedence = {
+//       "=": [1, 2],
+//       "+": [10, 11],
+//       "-": [10, 11],
+//       "*": [20, 21],
+//       "/": [20, 21],
+//       "**": [90, 91],
+//    };
+//
+//    function parseExpr(tkns, mbp = 0) {
+//       let lhs = next().value;
+//       if (lhs === "(") {
+//          lhs = parseExpr(tkns);
+//          next();
+//       }
+//       while (true) {
+//          let op = peak();
+//          if (op.type === "EOF" || op.value === ")") break;
+//          const [lbp, rbp] = precedence[op.value];
+//          if (lbp < mbp) break;
+//          next();
+//          let rhs = parseExpr(tkns, rbp);
+//          lhs = { op: op.value, expr: { lhs: lhs, rhs: rhs } };
+//       }
+//       return lhs;
+//    }
+//    return parseExpr(tokens);
+// }
+// function isEvalable(expr, op, env) {
+//    let lhs, rhs;
+//    if ((expr.lhs && expr.lhs.expr) || (expr.rhs && expr.rhs.expr)) {
+//       if (expr.lhs && expr.lhs.expr) {
+//          lhs = isEvalable(expr.lhs.expr, expr.lhs.op, env);
+//       } else {
+//          lhs = Number(expr.lhs);
+//          if (isNaN(lhs)) return false;
+//       }
+//       if (expr.rhs && expr.rhs.expr) {
+//          rhs = isEvalable(expr.rhs.expr, expr.rhs.op, env);
+//       } else {
+//          rhs = Number(expr.rhs);
+//          if (isNaN(rhs)) return false;
+//       }
+//    } else {
+//       rhs = Number(expr.rhs);
+//       lhs = Number(expr.lhs);
+//       if (isNaN(rhs) || isNaN(rhs)) {
+//          if (env.Variables.has(expr.lhs)) {
+//             lhs = env.Variables.get(expr.lhs);
+//          }
+//          if (env.Variables.has(expr.rhs)) {
+//             rhs = env.Variables.get(expr.rhs);
+//          }
+//       }
+//    }
+//    const evd = evaluateBinExp(lhs, rhs, op);
+//    return evd ? evd : false;
+// }
+//
+// // function typeChecker
+//
+// function evaluateBinExp(lhs, rhs, op) {
+//    switch (op) {
+//       case "+":
+//          return lhs + rhs;
+//       case "-":
+//          return lhs - rhs;
+//       case "*":
+//          return lhs * rhs;
+//       case "/":
+//          return lhs / rhs;
+//       default:
+//          return false;
+//    }
+// }
 /*
 18: grouping 	n/a 	Grouping
 (x) 	[1]

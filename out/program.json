@@ -2,82 +2,117 @@
   "type": "program",
   "expr": [
     {
+      "type": "function declaration",
+      "name": "one",
+      "params": [
+        "n"
+      ],
+      "tokenRange": [
+        1,
+        12
+      ],
+      "expr": [
+        {
+          "value": "return",
+          "length": 6,
+          "type": "word",
+          "kind": "keyword",
+          "position": 22,
+          "line": 2,
+          "start_col": 4,
+          "end_col": 9,
+          "token_num": 7
+        },
+        {
+          "value": "n",
+          "length": 1,
+          "type": "word",
+          "kind": "identifier",
+          "position": 29,
+          "line": 2,
+          "start_col": 11,
+          "end_col": 11,
+          "token_num": 8
+        },
+        {
+          "value": "*",
+          "length": 1,
+          "type": "star",
+          "kind": "operator",
+          "position": 31,
+          "line": 2,
+          "start_col": 13,
+          "end_col": 13,
+          "token_num": 9
+        },
+        {
+          "value": "2",
+          "length": 1,
+          "type": "number",
+          "kind": "numeric_lit",
+          "position": 33,
+          "line": 2,
+          "start_col": 15,
+          "end_col": 15,
+          "token_num": 10
+        },
+        {
+          "value": ";",
+          "length": 1,
+          "type": "semi_colon",
+          "kind": "operator",
+          "position": 34,
+          "line": 2,
+          "start_col": 16,
+          "end_col": 16,
+          "token_num": 11
+        }
+      ]
+    },
+    {
       "type": "constant declaration",
       "name": "a",
       "evaluated": 5.5,
       "tokenRange": [
-        1,
-        13
-      ],
-      "expr": {
-        "op": "+",
-        "expr": {
-          "lhs": {
-            "op": "+",
-            "expr": {
-              "lhs": "1",
-              "rhs": {
-                "op": "*",
-                "expr": {
-                  "lhs": "2",
-                  "rhs": "2"
-                }
-              }
-            }
-          },
-          "rhs": {
-            "op": "/",
-            "expr": {
-              "lhs": "1",
-              "rhs": "2"
-            }
-          }
-        }
-      }
+        13,
+        25
+      ]
     },
     {
       "type": "constant declaration",
       "name": "b",
       "evaluated": 10,
       "tokenRange": [
-        14,
-        26
-      ],
-      "expr": {
-        "op": "+",
-        "expr": {
-          "lhs": "4",
-          "rhs": {
-            "op": "/",
-            "expr": {
-              "lhs": {
-                "op": "*",
-                "expr": {
-                  "lhs": "3",
-                  "rhs": "4"
-                }
-              },
-              "rhs": "2"
-            }
-          }
-        }
-      }
+        26,
+        38
+      ]
+    },
+    {
+      "type": "constant declaration",
+      "name": "d",
+      "evaluated": "\"str thie\"",
+      "tokenRange": [
+        39,
+        43
+      ]
+    },
+    {
+      "type": "constant declaration",
+      "name": "e",
+      "evaluated": "\"string\"",
+      "tokenRange": [
+        44,
+        50
+      ]
     },
     {
       "type": "constant declaration",
       "name": "c",
       "evaluated": 55,
       "tokenRange": [
-        27,
-        33
-      ],
-      "expr": {
-        "op": "*",
-        "expr": {
-          "lhs": "a",
-          "rhs": "b"
-        }
-      }
+        51,
+        57
+      ]
     }
   ]
 }

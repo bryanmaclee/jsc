@@ -1,4 +1,4 @@
-export function Environment(e = false, name = "global") {
+export function Environment(e = false, name = "global", type = "global") {
    const global = e ? false : true;
    const linAr = [];
    let Lineage;
@@ -9,9 +9,11 @@ export function Environment(e = false, name = "global") {
       Lineage.push(e.Name);
    }
    const Name = name;
+   const Type = type;
    const Variables = new Map();
    const UnUtilizedVars = new Set();
    const Constants = new Set();
+   const DumbVars = new Set();
    const Functions = new Set();
    const FunctionStrs = new Map();
    const Types = new Map();
@@ -21,6 +23,9 @@ export function Environment(e = false, name = "global") {
       Variables.set(name, value);
       if ((kind = "const")) {
          Constants.add(name);
+      } else if (kind === "var") {
+         DumbVars.add(name);
+         hoistVar(name, value, Lineage);
       }
       UnUtilizedVars.add(name);
    }
@@ -51,6 +56,7 @@ export function Environment(e = false, name = "global") {
       Variables,
       UnUtilizedVars,
       Constants,
+      DumbVars,
       Functions,
       FunctionStrs,
       Types,
@@ -60,4 +66,13 @@ export function Environment(e = false, name = "global") {
       assignVar,
       assignFn,
    };
+}
+
+function hoistVar(scopes = 0, lin) {
+   if (scopes) {
+      console.log(`hoist ${scopes} scopes up`);
+   } else {
+      console.log(`hoist to function scope`);
+   }
+   console.log(lin);
 }

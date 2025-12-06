@@ -8,6 +8,7 @@ import {
 import { tokenize } from "./dep/lexer";
 import { Environment } from "./dep/env.js";
 import { parse } from "./dep/parser.js";
+import { output } from "./dep/output.js";
 
 const access = {
    vars: {},
@@ -19,6 +20,8 @@ const access = {
    lineage: ["global"],
 };
 
+const globalEnv = Environment();
+
 (async function () {
    const datastr = await Bun.file(Files.testFile()).text();
    const data = truncateInput(datastr);
@@ -27,8 +30,9 @@ const access = {
    await Bun.write(Files.outputText, JSON.stringify(lexed, null, 2));
    const woWhite = lexed.filter((thing) => thing.kind !== "format");
    await Bun.write(Files.outputTrunk, JSON.stringify(woWhite, null, 2));
-   const env = Environment();
-   let program = instanciateProgram(woWhite, env);
+   let program = instanciateProgram(woWhite, globalEnv);
+   const out = output(program);
+   await Bun.write(Files.programFile, out);
    // const progOut = preStringify(program);
    // typeChecker(program);
    await Bun.write(Files.outputFile, JSON.stringify(program, null, 2));

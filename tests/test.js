@@ -24,13 +24,14 @@ function dodat(g, h) {
       const b = (c = d * 2);
    }
 }
+BEGIN;
 function one(n) {
    return n * 2;
 }
 const a = 1 + 2 * 2 + 1 / 2;
 const b = 4 + (3 * 4) / 2;
-const c = a * b;
-BEGIN;
-const d = "str";
+const d = "str thie";
+let e = "str" + "ing";
+var c = a * b;
 END;
 const pre = one(1) + 1;

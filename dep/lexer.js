@@ -111,7 +111,6 @@ export function tokenize(src) {
             chunk += c();
             inc();
             add(chunk, "string", "literal");
-            console.log(chunk);
             continue;
          }
          while (itter < src.length && operator.has(chunk + c())) {
