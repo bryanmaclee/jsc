@@ -26,9 +26,7 @@ function dodat(g, h) {
 }
 BEGIN;
 function one(n) {
-   if (n > 0){
    return n * 2;
-   }
 }
 const a = 1 + 2 * 2 + 1 / 2;
 const     b = 4 + (3 * 4) / 2;

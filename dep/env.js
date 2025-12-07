@@ -14,7 +14,7 @@ export function Environment(e = false, name = "global", type = "global") {
    const UnUtilizedVars = new Set();
    const Constants = new Set();
    const DumbVars = new Set();
-   const Functions = new Set();
+   const Functions = new Map();
    const FunctionStrs = new Map();
    const Types = new Map();
    const Children = [];
@@ -37,11 +37,11 @@ export function Environment(e = false, name = "global", type = "global") {
       Variables.set(name, value);
    }
 
-   function assignFn(name) {
+   function assignFn(name, exp) {
       if (Functions.has(name)) {
          console.log(`function ${name} has already been declared`);
       }
-      Functions.add(name);
+      Functions.set(name, exp);
    }
 
    function getVar(name) {

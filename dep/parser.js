@@ -13,10 +13,13 @@ export function parse(tokens, environment) {
       if (stmt) statements.push(stmt);
       token = eat();
    }
-
+   if (token.type === "EOF") {
+      console.log("found an eof");
+   }
    if (statements.length) {
       return statements;
    } else {
+      tokens.pop();
       return tokens;
    }
 
@@ -40,12 +43,17 @@ export function parse(tokens, environment) {
                   switch (token.value) {
                      case "function":
                         return define(func, token, env);
+                     case "return":
+                        return define(Return, token, env);
                      case "const":
                      case "let":
                      case "var":
                      case "lin":
                         return define(vars, token, env);
                      default:
+                        console.error(
+                           `keyword: < ${token.value} > has not been set up to parse`,
+                        );
                         break;
                   }
                   if (env.Functions.has(token.value)) {
@@ -57,12 +65,81 @@ export function parse(tokens, environment) {
       }
    }
 
+   function expect(thing) {
+      if (at() !== thing) {
+         console.error(`expected ${thing}. got ${at()}.`);
+         return false;
+      }
+      return eat();
+   }
+
    function define(cb, token, env) {
       return cb(token, env);
    }
 
    function fn_call(token) {
-      return token;
+      const tokenRange = [token.token_num];
+      const fnName = eat();
+      eat();
+      let next = eat();
+      const args = [];
+      while (next.type !== "close_paren") {
+         args.push(next.value);
+         next = eat();
+         expect(",");
+      }
+      tokenRange.push(eat().tokenNum);
+      console.log(token.value, args);
+      return {
+         type: "func_call",
+         name: fnName.value,
+         evaluated: "ev",
+         tokenRange: tokenRange,
+      };
+   }
+
+   function Return(token, env) {
+      console.log("return parser not yet set up");
+   }
+
+   function func(token, env) {
+      const tokenRange = [token.token_num];
+      let scp = 1;
+      const stmt = [];
+      const fnName = eat();
+      eat();
+      let next = eat();
+      const params = [];
+      while (next.type !== "close_paren") {
+         params.push(next.value);
+         next = eat();
+      }
+      eat();
+      next = eat();
+      while (next.type !== "close_curly" && scp !== 0) {
+         stmt.push(next);
+         if (next.value === "}") scp--;
+         else if (next.value === "{") scp++;
+         next = eat();
+      }
+      stmt.push(next);
+      stmt.push({ type: "EOF" });
+      const newEnv = Environment(env, fnName.value, "function");
+      console.log("back into parse");
+      parse(stmt, newEnv);
+      env.Children.push(newEnv);
+      tokenRange.push(next.token_num);
+      env.assignFn(fnName.value, stmt);
+      return type_checker(
+         {
+            type: "function_declaration",
+            name: fnName.value,
+            params: params,
+            tokenRange: tokenRange,
+            expr: stmt,
+         },
+         env,
+      );
    }
 
    function vars(token, env) {
@@ -81,7 +158,16 @@ export function parse(tokens, environment) {
          // console.log(stmt);
          if (next.type === "word") {
             if (env.Functions.has(next.value)) {
-               console.log("DEFINITELY A CALL");
+               const callAr = [next];
+               next = eat();
+               while (next.value !== ")") {
+                  callAr.push(next);
+                  next = eat();
+               }
+               callAr.push(next);
+               callAr.push({ type: "EOF" });
+               const ans = parse(callAr);
+               console.log("we back baby", ans);
             }
          }
          stmt.push(next);
@@ -111,7 +197,7 @@ export function parse(tokens, environment) {
       );
    }
 
-   function func(token, env) {
+   function conditional(token, env) {
       const tokenRange = [token.token_num];
       let scp = 1;
       const stmt = [];
@@ -131,6 +217,7 @@ export function parse(tokens, environment) {
          else if (next.value === "{") scp++;
          next = eat();
       }
+      stmt.push(next);
       stmt.push({ type: "EOF" });
       const newEnv = Environment(env, fnName.value, "function");
       console.log("back into parse");
@@ -167,6 +254,7 @@ export function passToBun(tokens, env) {
          }
       }
    }
+   console.log(evalStr);
    let evaluation = eval(evalStr);
    if (typeof evaluation === "string") {
       evaluation = '"' + evaluation + '"';

@@ -9,63 +9,151 @@
       ],
       "tokenRange": [
         1,
-        22
+        39
       ],
       "expr": [
         {
-          "value": "return",
-          "length": 6,
+          "value": "if",
+          "length": 2,
           "type": "word",
           "kind": "keyword",
           "position": 22,
           "line": 2,
           "start_col": 4,
-          "end_col": 9,
+          "end_col": 5,
           "token_num": 13
+        },
+        {
+          "value": "(",
+          "length": 1,
+          "type": "open_paren",
+          "kind": "operator",
+          "position": 25,
+          "line": 2,
+          "start_col": 7,
+          "end_col": 7,
+          "token_num": 15
         },
         {
           "value": "n",
           "length": 1,
           "type": "word",
           "kind": "identifier",
-          "position": 29,
+          "position": 26,
           "line": 2,
+          "start_col": 8,
+          "end_col": 8,
+          "token_num": 16
+        },
+        {
+          "value": ">",
+          "length": 1,
+          "type": "greater_than",
+          "kind": "operator",
+          "position": 28,
+          "line": 2,
+          "start_col": 10,
+          "end_col": 10,
+          "token_num": 18
+        },
+        {
+          "value": "0",
+          "length": 1,
+          "type": "number",
+          "kind": "numeric_lit",
+          "position": 30,
+          "line": 2,
+          "start_col": 12,
+          "end_col": 12,
+          "token_num": 20
+        },
+        {
+          "value": ")",
+          "length": 1,
+          "type": "close_paren",
+          "kind": "operator",
+          "position": 31,
+          "line": 2,
+          "start_col": 13,
+          "end_col": 13,
+          "token_num": 21
+        },
+        {
+          "value": "{",
+          "length": 1,
+          "type": "open_curly",
+          "kind": "operator",
+          "position": 32,
+          "line": 2,
+          "start_col": 14,
+          "end_col": 14,
+          "token_num": 22
+        },
+        {
+          "value": "return",
+          "length": 6,
+          "type": "word",
+          "kind": "keyword",
+          "position": 37,
+          "line": 3,
+          "start_col": 4,
+          "end_col": 9,
+          "token_num": 27
+        },
+        {
+          "value": "n",
+          "length": 1,
+          "type": "word",
+          "kind": "identifier",
+          "position": 44,
+          "line": 3,
           "start_col": 11,
           "end_col": 11,
-          "token_num": 15
+          "token_num": 29
         },
         {
           "value": "*",
           "length": 1,
           "type": "star",
           "kind": "operator",
-          "position": 31,
-          "line": 2,
+          "position": 46,
+          "line": 3,
           "start_col": 13,
           "end_col": 13,
-          "token_num": 17
+          "token_num": 31
         },
         {
           "value": "2",
           "length": 1,
           "type": "number",
           "kind": "numeric_lit",
-          "position": 33,
-          "line": 2,
+          "position": 48,
+          "line": 3,
           "start_col": 15,
           "end_col": 15,
-          "token_num": 19
+          "token_num": 33
         },
         {
           "value": ";",
           "length": 1,
           "type": "semi_colon",
           "kind": "operator",
-          "position": 34,
-          "line": 2,
+          "position": 49,
+          "line": 3,
           "start_col": 16,
           "end_col": 16,
-          "token_num": 20
+          "token_num": 34
+        },
+        {
+          "value": "}",
+          "length": 1,
+          "type": "close_curly",
+          "kind": "operator",
+          "position": 54,
+          "line": 4,
+          "start_col": 4,
+          "end_col": 4,
+          "token_num": 39
         }
       ]
     },
@@ -74,8 +162,8 @@
       "name": "a",
       "evaluated": 5.5,
       "tokenRange": [
-        24,
-        47
+        43,
+        66
       ]
     },
     {
@@ -83,8 +171,8 @@
       "name": "b",
       "evaluated": 10,
       "tokenRange": [
-        49,
-        74
+        68,
+        93
       ]
     },
     {
@@ -92,8 +180,8 @@
       "name": "e",
       "evaluated": "\"string\"",
       "tokenRange": [
-        76,
-        87
+        95,
+        106
       ]
     },
     {
@@ -101,8 +189,8 @@
       "name": "c",
       "evaluated": 55,
       "tokenRange": [
-        89,
-        100
+        108,
+        119
       ]
     },
     {
@@ -110,8 +198,8 @@
       "name": "pre",
       "evaluated": false,
       "tokenRange": [
-        102,
-        116
+        121,
+        135
       ]
     }
   ]

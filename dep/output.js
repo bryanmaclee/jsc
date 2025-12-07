@@ -31,7 +31,7 @@ function fn_declaration(exp) {
    apStr += exp.name + "(" + exp.params.toString() + "){" + breaker;
    for (const st of exp.expr) {
       apStr += st.value;
-      console.log(st);
+      // console.log(st);
       if (access.tokens[st.token_num].kind === "format") {
          apStr += access.tokens[st.token_num].value;
          continue;
