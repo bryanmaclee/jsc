@@ -1,10 +1,9 @@
-function one(n){
-if (n > 0){
-return n * 2;
-}
-};
 const a = 5.5;
-const b = 10;
+const b = 8;
 let e = "string";
-var c = 55;
-const pre = ;
+var c = 44;
+function one(n){
+let h = a + b;
+return n * 5;
+}
+const pre = 11;

@@ -3,7 +3,7 @@ import { access } from "./lib.js";
 let apStr = "";
 const breaker = "\n";
 export function output(input) {
-   // console.log(input);
+   console.log(JSON.stringify(input, null, 3));
    for (const exp of input.expr) {
       switch (exp.type) {
          case "const_declaration":
@@ -30,14 +30,17 @@ function fn_declaration(exp) {
    apStr += "function ";
    apStr += exp.name + "(" + exp.params.toString() + "){" + breaker;
    for (const st of exp.expr) {
-      apStr += st.value;
-      // console.log(st);
-      if (access.tokens[st.token_num].kind === "format") {
-         apStr += access.tokens[st.token_num].value;
-         continue;
+      if (st.type !== "EOF") {
+         apStr += st.value;
+         // console.log(st);
+         if (access.tokens[st.token_num]?.kind === "format") {
+            apStr += access.tokens[st.token_num].value;
+            continue;
+         }
+         console.error("i dont know");
       }
    }
-   apStr += "};\n";
+   // apStr += "};\n";
 }
 
 function const_declaration(exp) {

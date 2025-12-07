@@ -24,6 +24,7 @@ const globalEnv = Environment();
    access.trunc = access.tokens.filter((thing) => thing.kind !== "format");
    await Bun.write(Files.outputTrunk, JSON.stringify(access.trunc, null, 2));
    let program = instanciateProgram(access.tokens, globalEnv);
+   // console.trace();
    // console.log(globalEnv);
    const out = output(program);
    await Bun.write(Files.programFile, out);
