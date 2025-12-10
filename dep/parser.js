@@ -1,6 +1,7 @@
 import { type_checker } from "./typechecker.js";
 import { Environment } from "./env.js";
 import { tokenize } from "./lexer.js";
+import { globalEnv } from "./lib.js";
 
 const runTests = false;
 
@@ -32,7 +33,7 @@ export function parse(tokens, environment) {
 
    function eat(i = 1) {
       // console.log(tokens[iter]);
-      while (tokens[iter].kind === "format") iter++;
+      while (tokens[iter]?.kind === "format") iter++;
       iter += i;
       return tokens[iter - 1];
    }
@@ -122,12 +123,12 @@ export function parse(tokens, environment) {
       // console.log(dille);
       // tokenRange.push(eat().tokenNum);
       // console.log(createFnEnv(theFn, args));
-      // return {
-      //    type: "func_call",
-      //    name: fnName.value,
-      //    evaluated: "ev",
-      //    tokenRange: tokenRange,
-      // };
+      return {
+         type: "func_call",
+         name: fnName.value,
+         evaluated: "ev",
+         tokenRange: tokenRange,
+      };
    }
 
    function Return(token, env) {
@@ -162,12 +163,13 @@ export function parse(tokens, environment) {
       while (next.type !== "close_curly" && scp !== 0) {
          if (next.value === "}") scp--;
          else if (next.value === "{") scp++;
-         if (next.value === "return") retAt = stmt.length;
+         if (next.value === "return" && scp === "}") retAt = stmt.length;
          stmt.push(next);
+         // console.log(next);
          next = eat();
+         // console.log(next);
       }
       stmt.push(next);
-      // console.error("i want this stmt");
       // console.log(stmt);
       const retStmt = stmt.splice(retAt, stmt.length - 1);
       // console.log(stmt, retStmt);
@@ -181,7 +183,7 @@ export function parse(tokens, environment) {
          newEnv.declareVar(par, "let");
          newEnv.params.push(par);
       }
-      parse(stmt, newEnv);
+      // parse(stmt, newEnv);
       env.Children.push(newEnv);
       tokenRange.push(next.token_num);
       // console.log(stmt, retStmt);
@@ -198,7 +200,7 @@ export function parse(tokens, environment) {
             name: fnName.value,
             params: params,
             tokenRange: tokenRange,
-            expr: stmt.toSpliced(retAt, 0, ...retStmt),
+            expr: parse(stmt.toSpliced(retAt, 0, ...retStmt), newEnv),
          },
          env,
       );
@@ -301,8 +303,27 @@ export function parse(tokens, environment) {
    }
 }
 
+function accessibleVars(qry, env) {
+   if (env.Variables.has(qry)) return env.Variables.get(qry);
+   let parent = globalEnv;
+   let is_set = false;
+   let set_val = 0;
+   const linCpy = [...env.Lineage];
+   for (const ancestor of linCpy) {
+      if (parent.Variables.has(qry)) {
+         set_val = parent.Variables.get(qry);
+         is_set = true;
+      }
+      parent = parent.childern;
+   }
+   const lin = env.Lineage;
+   if (is_set) return set_val;
+   return false;
+   console.error("called mothah fucka!!!!!!!!!!!!!!!!!!");
+}
+
 export function passToBun(tokens, env) {
-   // console.log("bun is processing: ", tokens, env);
+   console.log("bun is processing: ", tokens);
    let evalStr = "";
    for (const token of tokens) {
       // console.log(token.value);
@@ -311,6 +332,7 @@ export function passToBun(tokens, env) {
             if (env.Variables.has(token.value)) {
                evalStr += env.getVar(token.value);
             } else {
+               accessibleVars(token.value, env);
                return false;
             }
          } else {
@@ -318,7 +340,7 @@ export function passToBun(tokens, env) {
          }
       }
    }
-   // console.log(evalStr);
+   console.log("BUN says", evalStr);
    let evaluation = eval(evalStr);
    if (typeof evaluation === "string") {
       evaluation = '"' + evaluation + '"';

@@ -5,13 +5,12 @@ import {
    preStringify,
    ditchWhite,
    access,
+   globalEnv,
 } from "./dep/lib";
 import { tokenize } from "./dep/lexer";
 import { Environment } from "./dep/env.js";
 import { parse } from "./dep/parser.js";
 import { output } from "./dep/output.js";
-
-const globalEnv = Environment();
 
 (async function () {
    const datastr = await Bun.file(Files.testFile()).text();
@@ -25,12 +24,13 @@ const globalEnv = Environment();
    await Bun.write(Files.outputTrunk, JSON.stringify(access.trunc, null, 2));
    let program = instanciateProgram(access.tokens, globalEnv);
    // console.trace();
-   // console.log(globalEnv);
    const out = output(program);
+   console.log(out);
    await Bun.write(Files.programFile, out);
    // const progOut = preStringify(program);
    // typeChecker(program);
    await Bun.write(Files.outputFile, JSON.stringify(program, null, 2));
+   // console.log(globalEnv);
    // await Bun.write(Files.outputFile, JSON.stringify(progOut, null, 2));
 })();
 

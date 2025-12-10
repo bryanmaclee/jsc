@@ -1,9 +1,4 @@
-const a = 5.5;
-const b = 8;
-let e = "string";
-var c = 44;
-function one(n){
-let h = a + b;
-return n * 5;
+function one(n) {
+   return n;
 }
-const pre = 11;
+const pre = 3;

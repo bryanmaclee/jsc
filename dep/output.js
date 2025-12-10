@@ -1,4 +1,4 @@
-import { access } from "./lib.js";
+import { access, globalEnv } from "./lib.js";
 
 let apStr = "";
 const breaker = "\n";
@@ -23,6 +23,8 @@ export function output(input) {
             break;
       }
    }
+   // console.log(globalEnv);
+   console.log(apStr);
    return apStr;
 }
 
@@ -37,7 +39,7 @@ function fn_declaration(exp) {
             apStr += access.tokens[st.token_num].value;
             continue;
          }
-         console.error("i dont know");
+         // console.error("i dont know");
       }
    }
    // apStr += "};\n";

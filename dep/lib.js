@@ -1,9 +1,12 @@
 import { tokenTypes } from "../dep/syntax";
+import { Environment } from "./env.js";
 
 export const access = {
    tokens: [],
    trunc: [],
 };
+
+export const globalEnv = Environment();
 
 export function ditchWhite(str) {
    return str.filter((thing) => thing.kind !== "format");

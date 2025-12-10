@@ -1,3 +1,5 @@
+const BEGIN = 1;
+const END = 1;
 function userCard() {
    //function 'would' be `replaced` by "component"
    <div style={styles.card}>
@@ -21,17 +23,17 @@ let charlie = beta * beta;
 function dodat(g, h) {
    function doit(e, f) {
       let a = 1 + 2 * 2;
-      const b = (c = d * 2);
+      const b = (c =  2);
    }
 }
-BEGIN;
-const a = 1 + 2 * 2 + 1 / 2;
-const     b = 2 + (3 * 4) / 2;
+const a = 1 + 2;
+const b = 2 + 2;
 let e = "str" + "ing";
 var c = a * b;
+BEGIN;
 function one(n) {
-   let h = a + b;
-   return n * 5;
+   const p = 3;
+   return n;
 }
 const pre = one(2) + 1;
 END;

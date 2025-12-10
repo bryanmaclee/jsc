@@ -6,7 +6,7 @@ export function Environment(e = false, name = "global", type = "global") {
       Lineage = [];
    } else {
       Lineage = Array.from(e.Lineage);
-      Lineage.push(e.Name);
+      Lineage.push(e.Children.length);
    }
    const Name = name;
    const Type = type;
@@ -31,7 +31,7 @@ export function Environment(e = false, name = "global", type = "global") {
 
    function assignVar(name, value) {
       if (Constants.has(name) && Variables.has(name)) {
-         console.log(`cannot reasign to constant ${name}`);
+         console.error(`cannot reasign to constant ${name}`);
          return;
       }
       Variables.set(name, value);

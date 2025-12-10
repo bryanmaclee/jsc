@@ -2,216 +2,75 @@
   "type": "program",
   "expr": [
     {
-      "type": "const_declaration",
-      "name": "a",
-      "evaluated": 5.5,
-      "tokenRange": [
-        1,
-        24
-      ]
-    },
-    {
-      "type": "const_declaration",
-      "name": "b",
-      "evaluated": 8,
-      "tokenRange": [
-        26,
-        51
-      ]
-    },
-    {
-      "type": "let_declaration",
-      "name": "e",
-      "evaluated": "\"string\"",
-      "tokenRange": [
-        53,
-        64
-      ]
-    },
-    {
-      "type": "var_declaration",
-      "name": "c",
-      "evaluated": 44,
-      "tokenRange": [
-        66,
-        77
-      ]
-    },
-    {
       "type": "function_declaration",
       "name": "one",
       "params": [
         "n"
       ],
       "tokenRange": [
-        79,
-        116
+        1,
+        21
       ],
       "expr": [
-        {
-          "value": "let",
-          "length": 3,
-          "type": "word",
-          "kind": "keyword",
-          "position": 120,
-          "line": 6,
-          "start_col": 4,
-          "end_col": 6,
-          "token_num": 91
-        },
-        {
-          "value": "h",
-          "length": 1,
-          "type": "word",
-          "kind": "identifier",
-          "position": 124,
-          "line": 6,
-          "start_col": 8,
-          "end_col": 8,
-          "token_num": 93
-        },
-        {
-          "value": "=",
-          "length": 1,
-          "type": "equals",
-          "kind": "operator",
-          "position": 126,
-          "line": 6,
-          "start_col": 10,
-          "end_col": 10,
-          "token_num": 95
-        },
-        {
-          "value": "a",
-          "length": 1,
-          "type": "word",
-          "kind": "identifier",
-          "position": 128,
-          "line": 6,
-          "start_col": 12,
-          "end_col": 12,
-          "token_num": 97
-        },
-        {
-          "value": "+",
-          "length": 1,
-          "type": "plus",
-          "kind": "operator",
-          "position": 130,
-          "line": 6,
-          "start_col": 14,
-          "end_col": 14,
-          "token_num": 99
-        },
-        {
-          "value": "b",
-          "length": 1,
-          "type": "word",
-          "kind": "identifier",
-          "position": 132,
-          "line": 6,
-          "start_col": 16,
-          "end_col": 16,
-          "token_num": 101
-        },
-        {
-          "value": ";",
-          "length": 1,
-          "type": "semi_colon",
-          "kind": "operator",
-          "position": 133,
-          "line": 6,
-          "start_col": 17,
-          "end_col": 17,
-          "token_num": 102
-        },
         {
           "value": "return",
           "length": 6,
           "type": "word",
           "kind": "keyword",
-          "position": 138,
-          "line": 7,
-          "start_col": 4,
-          "end_col": 9,
-          "token_num": 107
+          "position": 25,
+          "line": 2,
+          "start_col": 7,
+          "end_col": 12,
+          "token_num": 16
         },
         {
           "value": "n",
           "length": 1,
           "type": "word",
           "kind": "identifier",
-          "position": 145,
-          "line": 7,
-          "start_col": 11,
-          "end_col": 11,
-          "token_num": 109
-        },
-        {
-          "value": "*",
-          "length": 1,
-          "type": "star",
-          "kind": "operator",
-          "position": 147,
-          "line": 7,
-          "start_col": 13,
-          "end_col": 13,
-          "token_num": 111
-        },
-        {
-          "value": "5",
-          "length": 1,
-          "type": "number",
-          "kind": "numeric_lit",
-          "position": 149,
-          "line": 7,
-          "start_col": 15,
-          "end_col": 15,
-          "token_num": 113
+          "position": 32,
+          "line": 2,
+          "start_col": 14,
+          "end_col": 14,
+          "token_num": 18
         },
         {
           "value": ";",
           "length": 1,
           "type": "semi_colon",
           "kind": "operator",
-          "position": 150,
-          "line": 7,
-          "start_col": 16,
-          "end_col": 16,
-          "token_num": 114
+          "position": 33,
+          "line": 2,
+          "start_col": 15,
+          "end_col": 15,
+          "token_num": 19
+        },
+        {
+          "value": "EOF",
+          "length": 3,
+          "type": "EOF",
+          "kind": "EOF"
         },
         {
           "value": "}",
           "length": 1,
           "type": "close_curly",
           "kind": "operator",
-          "position": 152,
-          "line": 8,
+          "position": 35,
+          "line": 3,
           "start_col": 1,
           "end_col": 1,
-          "token_num": 116
-        },
-        {
-          "value": "EOF",
-          "length": 3,
-          "type": "EOF",
-          "kind": "EOF"
-        },
-        {
-          "value": "EOF",
-          "length": 3,
-          "type": "EOF",
-          "kind": "EOF"
+          "token_num": 21
         }
       ]
     },
     {
       "type": "const_declaration",
       "name": "pre",
-      "evaluated": 11,
+      "evaluated": 3,
       "tokenRange": [
-        118,
-        132
+        23,
+        37
       ]
     }
   ]
