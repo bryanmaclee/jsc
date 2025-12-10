@@ -18,7 +18,7 @@ export function parse(tokens, environment) {
    const statements = [];
    let token = eat();
 
-   while (token && token.type !== "EOF") {
+   while (token && token?.type !== "EOF") {
       const stmt = fig(token, environment);
       if (stmt) statements.push(stmt);
       token = eat();
@@ -39,7 +39,7 @@ export function parse(tokens, environment) {
    }
 
    function at() {
-      while (tokens[iter].kind === "format") iter++;
+      while (tokens[iter]?.kind === "format") iter++;
       return tokens[iter];
    }
 
@@ -71,6 +71,7 @@ export function parse(tokens, environment) {
                   }
                case "identifier":
                   if (env.Functions.has(token.value)) {
+                     console.error("slkadjflkasjdfkl;ajsfkl;");
                      return define(fn_call, token, env);
                   }
                   // console.log("unknown context of identifier", token.value);
@@ -91,57 +92,22 @@ export function parse(tokens, environment) {
    }
 
    function define(cb, token, env) {
-      return cb(token, env);
-   }
-
-   function fn_call(token, env) {
-      // console.log("in call", token);
+      // console.log("defining... ", cb);
       const tokenRange = [token.token_num];
-      const fnName = token.value;
-      const theFn = env.Functions.get(fnName);
-      const fnEnv = theFn.environment;
-      eat();
-      let next = eat();
-      // console.log(fnName, next.value);
-      const args = [];
-      while (next.type !== "close_paren") {
-         if (args.length) {
-            if (expect(",")) continue;
-         }
-         args.push(next.value);
-         fnEnv.assignVar(fnEnv.params[args.length - 1], next.value);
-         next = eat();
-      }
-      // console.log("function environment: ", fnEnv);
-      // console.log("function expression: ", theFn.expr);
-      theFn.expr.push(eof);
-      const dille = parse(theFn.expr, fnEnv);
-      // console.log("bar o: ", dille);
-      // console.log("bar opera: ", theFn);
-      const lol = parse(theFn.ret, fnEnv);
-      if (lol.length === 1) return lol[0];
-      // console.log(dille);
-      // tokenRange.push(eat().tokenNum);
-      // console.log(createFnEnv(theFn, args));
-      return {
-         type: "func_call",
-         name: fnName.value,
-         evaluated: "ev",
-         tokenRange: tokenRange,
-      };
-   }
-
-   function Return(token, env) {
-      let next = eat();
-      let scp = 1;
-      const expr = [];
-      while (next.value !== ";" && next.value !== "}" && scp !== 0) {
-         expr.push(next);
-         next = eat();
-      }
-      expr.push(eof);
-      // console.trace();
-      return passToBun(parse(expr, env), env);
+      const k = cb(token, env);
+      let temp = k.expr;
+      // if (!k?.expr?.at(-1)?.token_num) {
+      //    while ("expr" in temp) {
+      //       // console.log("temp: ", temp);
+      //       temp = temp.expr;
+      //    }
+      //    while (temp.length) temp = temp.at(-1);
+      //    tokenRange.push(temp.expr.at(-1).token_num);
+      // } else {
+      //    tokenRange.push(k.expr.at(-1).token_num);
+      // }
+      // k.tokenRange = tokenRange;
+      return k;
    }
 
    function func(token, env) {
@@ -165,101 +131,151 @@ export function parse(tokens, environment) {
          else if (next.value === "{") scp++;
          if (next.value === "return" && scp === "}") retAt = stmt.length;
          stmt.push(next);
-         // console.log(next);
          next = eat();
-         // console.log(next);
       }
       stmt.push(next);
-      // console.log(stmt);
-      const retStmt = stmt.splice(retAt, stmt.length - 1);
-      // console.log(stmt, retStmt);
-      stmt.push(eof);
-      retStmt.push(eof);
-      // console.log(stmt);
+      // const retStmt = stmt.splice(retAt, stmt.length - 1);
+      // stmt.push(eof);
+      // retStmt.push(eof);
       const newEnv = Environment(env, fnName.value, "function");
       newEnv.params = [];
-      // console.log("back into parse");
       for (const par of params) {
          newEnv.declareVar(par, "let");
          newEnv.params.push(par);
       }
-      // parse(stmt, newEnv);
       env.Children.push(newEnv);
       tokenRange.push(next.token_num);
-      // console.log(stmt, retStmt);
-      // console.log(stmt.toSpliced(retAt, 0, ...retStmt));
       env.assignFn(fnName.value, {
          environment: newEnv,
          params: params,
          expr: stmt,
-         ret: retStmt,
+         // ret: retStmt,
       });
-      return type_checker(
-         {
-            type: "function_declaration",
-            name: fnName.value,
-            params: params,
-            tokenRange: tokenRange,
-            expr: parse(stmt.toSpliced(retAt, 0, ...retStmt), newEnv),
-         },
-         env,
-      );
+      return {
+         type: "function_declaration",
+         name: fnName.value,
+         params: params,
+         tokenRange: tokenRange,
+         // expr: parse(stmt.toSpliced(retAt, 0, ...retStmt), newEnv),
+         expr: parse(stmt, newEnv),
+      };
    }
 
    function vars(token, env) {
-      const tokenRange = [token.token_num];
-      const varName = eat();
+      const varName = eat().value;
       eat();
       const stmt = [];
       let next = eat();
+      let pScp = 0;
+      let bScp = 0;
       while (
-         next.type !== "semi_colon" &&
-         next !== undefined &&
-         next.kind !== "keyword" &&
-         next.kind !== "EOF"
+         (next !== undefined &&
+            next.type !== "semi_colon" &&
+            next.kind !== "EOF") ||
+         bScp !== 0 ||
+         pScp !== 0
       ) {
-         if (next.type === "word") {
-            if (env.Functions.has(next.value)) {
-               const callAr = [next];
-               next = eat();
-               while (next.value !== ")") {
-                  callAr.push(next);
-                  next = eat();
-               }
-               callAr.push(next);
-               callAr.push(eof);
-               const ans = parse(callAr, env)[0];
-               stmt.push({
-                  value: ans,
-                  type: "number",
-                  kind: "numeric_lit",
-               });
-               next = eat();
-            }
+         switch (next.value) {
+            case "(":
+               pScp++;
+               break;
+            case ")":
+               pScp--;
+               break;
+            case "{":
+               bScp++;
+               break;
+            case "}":
+               bScp--;
+               break;
          }
+         // if (next.type === "word") {
+         //    if (env.Functions.has(next.value)) {
+         //       const callAr = [next];
+         //       next = eat();
+         //       while (next.value !== ")") {
+         //          if (next.value !== ",") callAr.push(next);
+         //          next = eat();
+         //       }
+         //       callAr.push(next);
+         //       callAr.push(eof);
+         //       console.log(callAr);
+         //       const ans = parse(callAr, env)[0];
+         //       stmt.push({
+         //          value: ans,
+         //          type: "number",
+         //          kind: "numeric_lit",
+         //       });
+         //       next = eat();
+         //    }
+         // }
          stmt.push(next);
          next = eat();
       }
+      // console.log(stmt);
       stmt.push(eof);
-      tokenRange.push(next.token_num);
+      env.declareVar(varName, token.value);
       const toBun = passToBun(stmt, env);
-      env.declareVar(varName.value, token.value);
       if (toBun) {
-         env.assignVar(varName.value, toBun);
+         env.assignVar(varName, toBun, token.value);
       } else {
-         env.assignVar(varName.value, undefined);
+         env.assignVar(varName, undefined, token.value);
       }
-      // console.log(env);
-      return type_checker(
-         {
-            type: `${token.value}_declaration`,
-            name: varName.value,
-            evaluated: toBun,
-            tokenRange: tokenRange,
-            // expr: pars,
-         },
-         env,
-      );
+      return {
+         type: `${token.value}_declaration`,
+         name: varName,
+         evaluated: toBun,
+         expr: parse(stmt, env),
+      };
+   }
+
+   function fn_call(token, env) {
+      const tokenRange = [token.token_num];
+      const fnName = token.value;
+      const theFn = env.Functions.get(fnName);
+      // console.log(theFn);
+      // const fnEnv = theFn.environment;
+      // eat();
+      // let next = eat();
+      // const args = [];
+      // while (next.type !== "close_paren") {
+      //    if (args.length) {
+      //       if (expect(",")) continue;
+      //    }
+      //    args.push(next.value);
+      //    fnEnv.assignVar(fnEnv.params[args.length - 1], next.value);
+      //    next = eat();
+      // }
+      // theFn.expr.push(eof);
+      // // const dille = parse(theFn.expr, fnEnv);
+      // console.log("doin the doin");
+      // const lol = parse(theFn.ret, fnEnv);
+      // if (lol.length === 1) return lol[0];
+      return {
+         type: "func_call",
+         name: fnName.value,
+         evaluated: null,
+         ref: theFn,
+         // tokenRange: tokenRange,
+      };
+   }
+
+   function Return(token, env) {
+      let next = eat();
+      let scp = 1;
+      const expr = [];
+      while (next.value !== ";" && next.value !== "}" && scp !== 0) {
+         expr.push(next);
+         next = eat();
+      }
+      expr.push(eof);
+      const parsed = parse(expr, env);
+      // return passToBun(parse(expr, env), env);
+      return {
+         type: "return_statement",
+         evaluated: passToBun(parsed, env),
+         expr: parsed,
+      };
    }
 
    function conditional(token, env) {
@@ -323,7 +339,7 @@ function accessibleVars(qry, env) {
 }
 
 export function passToBun(tokens, env) {
-   console.log("bun is processing: ", tokens);
+   // console.log("bun is processing: ", tokens);
    let evalStr = "";
    for (const token of tokens) {
       // console.log(token.value);
@@ -340,7 +356,7 @@ export function passToBun(tokens, env) {
          }
       }
    }
-   console.log("BUN says", evalStr);
+   // console.log("BUN says", evalStr);
    let evaluation = eval(evalStr);
    if (typeof evaluation === "string") {
       evaluation = '"' + evaluation + '"';

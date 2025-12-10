@@ -26,15 +26,16 @@ function dodat(g, h) {
       const b = (c =  2);
    }
 }
-const a = 1 + 2;
+lin d = 1;
+const f = d + 1;
+const a = 3 + 2 ;
 const b = 2 + 2;
 let e = "str" + "ing";
 var c = a * b;
 BEGIN;
 function one(n) {
    const p = 3;
-   return n;
+   return n + p;
 }
 const pre = one(2) + 1;
 END;
-lin d = "str thie";

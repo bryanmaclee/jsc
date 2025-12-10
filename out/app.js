@@ -1,4 +1,4 @@
-function one(n) {
-   return n;
-}
-const pre = 3;
+function one(n){
+const p = 3;
+return n + p 
+}const pre = undefined ;

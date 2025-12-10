@@ -9,68 +9,224 @@
       ],
       "tokenRange": [
         1,
-        21
+        34
       ],
       "expr": [
         {
-          "value": "return",
-          "length": 6,
-          "type": "word",
-          "kind": "keyword",
-          "position": 25,
-          "line": 2,
-          "start_col": 7,
-          "end_col": 12,
-          "token_num": 16
+          "type": "const_declaration",
+          "name": "p",
+          "evaluated": 3,
+          "expr": [
+            {
+              "value": "3",
+              "length": 1,
+              "type": "number",
+              "kind": "numeric_lit",
+              "position": 32,
+              "line": 2,
+              "start_col": 14,
+              "end_col": 14,
+              "token_num": 19
+            }
+          ]
         },
         {
-          "value": "n",
-          "length": 1,
-          "type": "word",
-          "kind": "identifier",
-          "position": 32,
-          "line": 2,
-          "start_col": 14,
-          "end_col": 14,
-          "token_num": 18
-        },
-        {
-          "value": ";",
-          "length": 1,
-          "type": "semi_colon",
-          "kind": "operator",
-          "position": 33,
-          "line": 2,
-          "start_col": 15,
-          "end_col": 15,
-          "token_num": 19
-        },
-        {
-          "value": "EOF",
-          "length": 3,
-          "type": "EOF",
-          "kind": "EOF"
-        },
-        {
-          "value": "}",
-          "length": 1,
-          "type": "close_curly",
-          "kind": "operator",
-          "position": 35,
-          "line": 3,
-          "start_col": 1,
-          "end_col": 1,
-          "token_num": 21
+          "type": "return_statement",
+          "evaluated": false,
+          "expr": [
+            {
+              "value": "n",
+              "length": 1,
+              "type": "word",
+              "kind": "identifier",
+              "position": 45,
+              "line": 3,
+              "start_col": 11,
+              "end_col": 11,
+              "token_num": 27
+            },
+            {
+              "value": "+",
+              "length": 1,
+              "type": "plus",
+              "kind": "operator",
+              "position": 47,
+              "line": 3,
+              "start_col": 13,
+              "end_col": 13,
+              "token_num": 29
+            },
+            {
+              "value": "p",
+              "length": 1,
+              "type": "word",
+              "kind": "identifier",
+              "position": 49,
+              "line": 3,
+              "start_col": 15,
+              "end_col": 15,
+              "token_num": 31
+            }
+          ]
         }
       ]
     },
     {
       "type": "const_declaration",
       "name": "pre",
-      "evaluated": 3,
-      "tokenRange": [
-        23,
-        37
+      "evaluated": false,
+      "expr": [
+        {
+          "type": "func_call",
+          "evaluated": null,
+          "ref": {
+            "environment": {
+              "Lineage": [
+                0
+              ],
+              "Type": "function",
+              "Name": "one",
+              "Variables": {},
+              "UnUtilizedVars": {},
+              "Constants": {},
+              "UnsetConstants": {},
+              "DumbVars": {},
+              "Functions": {},
+              "FunctionStrs": {},
+              "Types": {},
+              "Children": [],
+              "params": [
+                "n"
+              ]
+            },
+            "params": [
+              "n"
+            ],
+            "expr": [
+              {
+                "value": "const",
+                "length": 5,
+                "type": "word",
+                "kind": "keyword",
+                "position": 22,
+                "line": 2,
+                "start_col": 4,
+                "end_col": 8,
+                "token_num": 13
+              },
+              {
+                "value": "p",
+                "length": 1,
+                "type": "word",
+                "kind": "identifier",
+                "position": 28,
+                "line": 2,
+                "start_col": 10,
+                "end_col": 10,
+                "token_num": 15
+              },
+              {
+                "value": "=",
+                "length": 1,
+                "type": "equals",
+                "kind": "operator",
+                "position": 30,
+                "line": 2,
+                "start_col": 12,
+                "end_col": 12,
+                "token_num": 17
+              },
+              {
+                "value": "3",
+                "length": 1,
+                "type": "number",
+                "kind": "numeric_lit",
+                "position": 32,
+                "line": 2,
+                "start_col": 14,
+                "end_col": 14,
+                "token_num": 19
+              },
+              {
+                "value": ";",
+                "length": 1,
+                "type": "semi_colon",
+                "kind": "operator",
+                "position": 33,
+                "line": 2,
+                "start_col": 15,
+                "end_col": 15,
+                "token_num": 20
+              },
+              {
+                "value": "return",
+                "length": 6,
+                "type": "word",
+                "kind": "keyword",
+                "position": 38,
+                "line": 3,
+                "start_col": 4,
+                "end_col": 9,
+                "token_num": 25
+              },
+              {
+                "value": "n",
+                "length": 1,
+                "type": "word",
+                "kind": "identifier",
+                "position": 45,
+                "line": 3,
+                "start_col": 11,
+                "end_col": 11,
+                "token_num": 27
+              },
+              {
+                "value": "+",
+                "length": 1,
+                "type": "plus",
+                "kind": "operator",
+                "position": 47,
+                "line": 3,
+                "start_col": 13,
+                "end_col": 13,
+                "token_num": 29
+              },
+              {
+                "value": "p",
+                "length": 1,
+                "type": "word",
+                "kind": "identifier",
+                "position": 49,
+                "line": 3,
+                "start_col": 15,
+                "end_col": 15,
+                "token_num": 31
+              },
+              {
+                "value": ";",
+                "length": 1,
+                "type": "semi_colon",
+                "kind": "operator",
+                "position": 50,
+                "line": 3,
+                "start_col": 16,
+                "end_col": 16,
+                "token_num": 32
+              },
+              {
+                "value": "}",
+                "length": 1,
+                "type": "close_curly",
+                "kind": "operator",
+                "position": 52,
+                "line": 4,
+                "start_col": 1,
+                "end_col": 1,
+                "token_num": 34
+              }
+            ]
+          }
+        }
       ]
     }
   ]
