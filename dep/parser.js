@@ -231,21 +231,21 @@ export function parse(tokens, environment) {
 
    function fn_call(token, env) {
       const tokenRange = [token.token_num];
-      const fnName = token.value;
-      const theFn = env.Functions.get(fnName);
+      const callerName = token.value;
+      const theFn = env.Functions.get(callerName);
       // console.log(theFn);
-      // const fnEnv = theFn.environment;
-      // eat();
-      // let next = eat();
-      // const args = [];
-      // while (next.type !== "close_paren") {
-      //    if (args.length) {
-      //       if (expect(",")) continue;
-      //    }
-      //    args.push(next.value);
-      //    fnEnv.assignVar(fnEnv.params[args.length - 1], next.value);
-      //    next = eat();
-      // }
+      const fnEnv = theFn.environment;
+      eat();
+      let next = eat();
+      const args = [];
+      while (next.type !== "close_paren") {
+         if (args.length) {
+            if (expect(",")) continue;
+         }
+         args.push(next.value);
+         fnEnv.assignVar(fnEnv.params[args.length - 1], next.value);
+         next = eat();
+      }
       // theFn.expr.push(eof);
       // // const dille = parse(theFn.expr, fnEnv);
       // console.log("doin the doin");
@@ -253,9 +253,10 @@ export function parse(tokens, environment) {
       // if (lol.length === 1) return lol[0];
       return {
          type: "func_call",
-         name: fnName.value,
+         name: callerName,
          evaluated: null,
-         ref: theFn,
+         fnRef: theFn.environment.Name,
+         fnLin: theFn.environment.Lineage,
          // tokenRange: tokenRange,
       };
    }

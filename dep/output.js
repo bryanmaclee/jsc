@@ -11,7 +11,7 @@ export function output(input) {
       //    inp.expr,
       //    "\n\n}..........................done",
       // );
-      console.log(inp.expr);
+      // console.log(inp.expr);
       for (const exp of inp.expr) {
          switch (exp.type) {
             case "const_declaration":
@@ -29,6 +29,7 @@ export function output(input) {
             case "lin_declaration":
                apStr += "const ";
                variable_declaration(exp);
+               apStr += ";  // this is a linear variable type\n";
                break;
             case "function_declaration":
                apStr += "function ";
@@ -37,6 +38,9 @@ export function output(input) {
             case "return_statement":
                apStr += "return ";
                return_statement(exp);
+               break;
+            case "func_call":
+               func_call(exp);
                break;
             default:
                apStr += exp.value + " ";
@@ -49,6 +53,8 @@ export function output(input) {
    // console.log(apStr);
    run(input);
    return apStr;
+
+   function func_call(exp) {}
 
    function return_statement(exp) {
       run(exp);
@@ -73,9 +79,9 @@ export function output(input) {
 
    function fn_declaration(exp) {
       apStr += exp.name + "(" + exp.params.toString() + "){" + breaker;
-      console.log("sompin hea    ", exp.expr);
+      // console.log("sompin hea    ", exp.expr);
       run(exp);
-      apStr += "}";
+      apStr += "}\n";
       // for (const st of exp.expr) {
       //    if (st.type !== "EOF") {
       //       if (st.value) {
