@@ -1,6 +1,6 @@
 function one(n){
-const p = 3 ;
-const d = 1 ;  // this is a linear variable type
+const p = 3;
+const d = 1;  // this is a linear variable type
 return n + p ;
 } 
 const pre = one(2)+ 1 ;

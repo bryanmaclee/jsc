@@ -1,4 +1,5 @@
 import err from "./error.js";
+import { globalEnv } from "./lib.js";
 
 export function Environment(e = false, name = "global", type = "global") {
    const global = e ? false : true;
@@ -25,29 +26,41 @@ export function Environment(e = false, name = "global", type = "global") {
    const Children = [];
 
    function declareVar(name, kind) {
+      let g = false;
       if (kind === "const" || kind === "lin") {
-         const t = kind === "const" ? UnsetConstants : UnsetLinears;
+         if (kind === "lin") g = globalEnv.UnUtilizedVars;
+         const t = kind === "const" ? UnsetConstants : globalEnv.UnsetLinears;
          t.add(name);
       } else if (kind === "var") {
          DumbVars.add(name);
          // hoistVar(name, value, Lineage);
       }
+      if (g) {
+         g.add(name);
+         return;
+      }
       UnUtilizedVars.add(name);
    }
 
    function assignVar(name, value, kind) {
+      let g = false;
       if (kind === "const" || kind === "lin") {
-         let t = kind === "const" ? Constants : Linears;
+         if (kind === "lin") g = globalEnv.Variables;
+         let t = kind === "const" ? Constants : globalEnv.Linears;
          if (t.has(name) && Variables.has(name)) {
             err(`cannot reasign to constant ${name}`, 1);
             return;
          }
-         const d = t === Constants ? UnsetConstants : UnsetLinears;
+         const d = t === Constants ? UnsetConstants : globalEnv.UnsetLinears;
          if (d.delete(name)) {
             t.add(name);
          } else {
             err(`${kind} ${name} dose not exist`, 1);
          }
+      }
+      if (g) {
+         g.set(name, value);
+         return;
       }
       Variables.set(name, value);
    }
@@ -60,15 +73,22 @@ export function Environment(e = false, name = "global", type = "global") {
    }
 
    function getVar(name) {
+      if (globalEnv.Linears.has(name)) {
+         globalEnv.UnUtilizedVars.delete(name);
+         if (!globalEnv.Variables.has(name)) {
+            err(`variable '${name}' dose not exist`, 1);
+         }
+         const v = globalEnv.Variables.get(name);
+         if (globalEnv.Linears.delete(name)) {
+            globalEnv.Variables.delete(name);
+         }
+         return v;
+      }
       UnUtilizedVars.delete(name);
       if (!Variables.has(name)) {
          err(`variable '${name}' dose not exist`, 1);
       }
-      const v = Variables.get(name);
-      if (Linears.delete(name)) {
-         Variables.delete(name);
-      }
-      return v;
+      return Variables.get(name);
    }
 
    return {
@@ -79,6 +99,8 @@ export function Environment(e = false, name = "global", type = "global") {
       UnUtilizedVars,
       Constants,
       UnsetConstants,
+      Linears,
+      UnsetLinears,
       DumbVars,
       Functions,
       FunctionStrs,

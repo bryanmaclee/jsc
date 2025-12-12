@@ -2,6 +2,7 @@ import { type_checker } from "./typechecker.js";
 import { Environment } from "./env.js";
 import { tokenize } from "./lexer.js";
 import { globalEnv } from "./lib.js";
+import err from "./error.js";
 
 const runTests = false;
 
@@ -17,14 +18,23 @@ export function parse(tokens, environment) {
    let iter = 0;
    const statements = [];
    let token = eat();
+   const unhandledTokens = [];
 
+   console.log(tokens.length);
    while (token && token?.type !== "EOF") {
       const stmt = fig(token, environment);
       if (stmt) statements.push(stmt);
+      if (!stmt && statements.length) {
+         unhandledTokens.push(token);
+      }
       token = eat();
    }
 
    if (statements.length) {
+      // console.log(iter, tokens.length);
+      for (const ut of unhandledTokens) {
+         statements.push(ut);
+      }
       return statements;
    } else {
       tokens.pop();
@@ -70,10 +80,14 @@ export function parse(tokens, environment) {
                      return define(fn_call, token, env);
                   }
                case "identifier":
+                  console.log(env.Functions);
                   if (env.Functions.has(token.value)) {
-                     console.error("slkadjflkasjdfkl;ajsfkl;");
+                     console.log("ksldjfklsjdfksjdklfjklsdjfkljsdklj");
                      return define(fn_call, token, env);
                   }
+                  // console.log(globalEnv);
+                  console.log(env);
+                  console.log(token.value, accessibleVars(token.value, env));
                   // console.log("unknown context of identifier", token.value);
                   break;
             }
@@ -145,6 +159,7 @@ export function parse(tokens, environment) {
       }
       env.Children.push(newEnv);
       tokenRange.push(next.token_num);
+      console.log("the func is onnnnnnnnnnnnnnnnnn");
       env.assignFn(fnName.value, {
          environment: newEnv,
          params: params,
@@ -163,6 +178,7 @@ export function parse(tokens, environment) {
 
    function vars(token, env) {
       const varName = eat().value;
+      console.error(varName);
       eat();
       const stmt = [];
       let next = eat();
@@ -215,6 +231,7 @@ export function parse(tokens, environment) {
       // console.log(stmt);
       stmt.push(eof);
       env.declareVar(varName, token.value);
+      // console.log(stmt);
       const toBun = passToBun(stmt, env);
       if (toBun) {
          env.assignVar(varName, toBun, token.value);
@@ -246,14 +263,11 @@ export function parse(tokens, environment) {
          fnEnv.assignVar(fnEnv.params[args.length - 1], next.value);
          next = eat();
       }
-      // theFn.expr.push(eof);
-      // // const dille = parse(theFn.expr, fnEnv);
-      // console.log("doin the doin");
-      // const lol = parse(theFn.ret, fnEnv);
-      // if (lol.length === 1) return lol[0];
+      // console.log(at(), iter, tokens.length);
       return {
          type: "func_call",
          name: callerName,
+         args: args,
          evaluated: null,
          fnRef: theFn.environment.Name,
          fnLin: theFn.environment.Lineage,
@@ -321,22 +335,25 @@ export function parse(tokens, environment) {
 }
 
 function accessibleVars(qry, env) {
-   if (env.Variables.has(qry)) return env.Variables.get(qry);
+   console.log(qry);
+   if (env.Variables.has(qry)) return env.getVar(qry);
+   if (env.params?.includes(qry)) return false;
    let parent = globalEnv;
    let is_set = false;
    let set_val = 0;
    const linCpy = [...env.Lineage];
    for (const ancestor of linCpy) {
       if (parent.Variables.has(qry)) {
-         set_val = parent.Variables.get(qry);
+         set_val = parent.getVar(qry);
          is_set = true;
       }
-      parent = parent.childern;
+      parent = parent.Children[ancestor];
    }
    const lin = env.Lineage;
    if (is_set) return set_val;
+   const erStr = `variable ${qry} dose not exist`;
+   err(erStr, 1);
    return false;
-   console.error("called mothah fucka!!!!!!!!!!!!!!!!!!");
 }
 
 export function passToBun(tokens, env) {

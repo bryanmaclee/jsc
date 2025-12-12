@@ -2,7 +2,7 @@ import { access, globalEnv } from "./lib.js";
 import err from "./error.js";
 
 const breaker = "\n";
-export function output(input) {
+export function outOpt(input) {
    // console.log(JSON.stringify(input, null, 3));
    let apStr = "";
    function run(inp) {
@@ -58,12 +58,12 @@ export function output(input) {
    return apStr;
 
    function func_call(exp) {
+      // console.log(exp);
       apStr += exp.name + "(";
       for (const arg of exp.args) {
          apStr += arg + ",";
       }
       apStr = apStr.slice(0, apStr.length - 1);
-      // console.log(apStr);
       apStr += ")";
    }
 
@@ -74,17 +74,17 @@ export function output(input) {
 
    function variable_declaration(exp) {
       apStr += exp.name + " = ";
-      // if (exp.evaluated) {
-      //    apStr += exp.evaluated;
-      // } else {
-      if ("expr" in exp) {
-         run(exp);
+      if (exp.evaluated) {
+         apStr += exp.evaluated;
       } else {
-         for (const tk in exp.expr) {
-            apStr += tk.value + " ";
+         if ("expr" in exp) {
+            run(exp);
+         } else {
+            for (const tk in exp.expr) {
+               apStr += tk.value + " ";
+            }
          }
       }
-      // }
    }
 
    function fn_declaration(exp) {

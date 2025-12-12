@@ -11,11 +11,30 @@ import { tokenize } from "./dep/lexer";
 import { Environment } from "./dep/env.js";
 import { parse } from "./dep/parser.js";
 import { output } from "./dep/output.js";
+import { outOpt } from "./dep/outOpt.js";
+import err from "./dep/error.js";
+// import { startLogger } from "./dep/error.js";
 
-(async function () {
+// const run = async () => {
+//    console.log("Application is running...");
+//    // ... perform asynchronous operations ...
+//    main();
+//    // Exit the process with a success code
+//    process.exit(0);
+// };
+//
+// run().catch(console.error);
+
+process.on("exit", (code) => {
+   console.log(`Process is exiting with code ${code}`);
+   // Perform synchronous cleanup here
+});
+
+async function main() {
+   // await startLogger();
    const datastr = await Bun.file(Files.testFile()).text();
    const data = truncateInput(datastr);
-   console.log(data);
+   // console.log(data);
    // const lexed = tokenize(data);
    tokenize(data);
    await Bun.write(Files.outputText, JSON.stringify(access.tokens, null, 2));
@@ -25,14 +44,18 @@ import { output } from "./dep/output.js";
    let program = instanciateProgram(access.tokens, globalEnv);
    // console.trace();
    const out = output(program);
-   console.log(out);
+   const opt = outOpt(program);
+   // console.log(out);
    await Bun.write(Files.programFile, out);
+   await Bun.write(Files.optimizedFile, opt);
    // const progOut = preStringify(program);
    // typeChecker(program);
    await Bun.write(Files.outputFile, JSON.stringify(program, null, 2));
    // console.log(globalEnv);
    // await Bun.write(Files.outputFile, JSON.stringify(progOut, null, 2));
-})();
+}
+
+main();
 
 function instanciateProgram(data, env) {
    return {
@@ -50,16 +73,3 @@ function evaluate(expr, env) {
    }
    return expr;
 }
-
-// const worker = new Worker(new URL("./worker.js", import.meta.url));
-// worker.postMessage("hello");
-// console.log(worker.postMessage('msg'))
-// process.on("worker", (worker) => {
-//   console.log("New worker created:", worker.threadId);
-// });
-// worker.onmessage = (ev) => {
-//   console.log(ev.data);
-// };
-// worker.addEventListener("open", () => {
-//   console.log("worker is ready");
-// });

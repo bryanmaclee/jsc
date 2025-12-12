@@ -35,6 +35,7 @@ export const Files = {
    outputText: "out/tokens.json",
    outputTrunk: "out/truncated.json",
    programFile: "out/app.js",
+   optimizedFile: "out/opt.js",
    testFile: function () {
       return args[0] ? args[0] : this.inTest;
    },
