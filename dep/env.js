@@ -76,6 +76,7 @@ export function Environment(e = false, name = "global", type = "global") {
       if (globalEnv.Linears.has(name)) {
          globalEnv.UnUtilizedVars.delete(name);
          if (!globalEnv.Variables.has(name)) {
+            console.log("lskjdfkjs");
             err(`variable '${name}' dose not exist`, 1);
          }
          const v = globalEnv.Variables.get(name);
@@ -86,6 +87,7 @@ export function Environment(e = false, name = "global", type = "global") {
       }
       UnUtilizedVars.delete(name);
       if (!Variables.has(name)) {
+         console.log("lskjdfkjs");
          err(`variable '${name}' dose not exist`, 1);
       }
       return Variables.get(name);

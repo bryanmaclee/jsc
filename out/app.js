@@ -1,8 +1,10 @@
-function one(n){
-const p = 3 ;
-const d = 1 ;  // this is a linear variable type
-return n + p ;
+function two(m){
+return m + 1 ;
 } 
-const pre = one(2)+ 1 ;
-const a = d + 2 + noVar ;
-const b = 2 + 2 + d ;
+function one(n){
+let u = 4 ;
+const p = 3 ;
+return n + u * p ;
+} 
+let e = "str" + "ing" ;
+const pre = one(2)+ 1 + two(1);

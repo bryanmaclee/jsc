@@ -31,11 +31,15 @@ var c = a * b;
    lin d = 1;
 BEGIN;
 function one(n) {
-   return n;
+   function two(m){
+      return m + 1;
+   }
+   let u = 4;
+   const p = 3;
+   return n + u * p + two(1);
 }
 let e = "str" + "ing";
 const pre = one(2) + 1;
 END;
-   const p = 3;
 const a = d + 2 + noVar;
 const b = 2 + 2 + d;
