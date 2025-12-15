@@ -1,4 +1,4 @@
-import { tokenTypes } from "../dep/syntax";
+import { tokenTypes } from "../dep/syntax.js";
 import { Environment } from "./env.js";
 
 export const access = {

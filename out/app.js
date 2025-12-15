@@ -1,10 +1,9 @@
+function one(n){
 function two(m){
 return m + 1 ;
 } 
-function one(n){
-let u = 4 ;
-const p = 3 ;
-return n + u * p ;
+return two(1);
 } 
-let e = "str" + "ing" ;
-const pre = one(2)+ 1 + two(1);
+const pre = one(2)+ 1 ;
+const div = < div id = "a_div" > this is a div < / div > ;  // this is a linear variable type
+if 

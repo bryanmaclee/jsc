@@ -68,6 +68,7 @@ export function Environment(e = false, name = "global", type = "global") {
    function assignFn(name, exp) {
       if (Functions.has(name)) {
          console.log(`function ${name} has already been declared`);
+         // console.trace();
       }
       Functions.set(name, exp);
    }
@@ -87,7 +88,7 @@ export function Environment(e = false, name = "global", type = "global") {
       }
       UnUtilizedVars.delete(name);
       if (!Variables.has(name)) {
-         console.log("lskjdfkjs");
+         console.log("why are we looking for vars");
          err(`variable '${name}' dose not exist`, 1);
       }
       return Variables.get(name);

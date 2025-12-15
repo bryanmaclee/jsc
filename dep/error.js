@@ -16,10 +16,11 @@ import { globalEnv } from "./lib.js";
 //    return;
 // }
 
-export default function err(msg, panic = false) {
+export default function err(msg, panic = false, info = "") {
    if (panic) {
       // console.log(globalEnv);
       // await logger.terminate();
+      console.log(info);
       throw msg;
       process.exit(1);
    } else {

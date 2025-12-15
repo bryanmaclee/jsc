@@ -10,7 +10,6 @@ export function tokenize(src) {
    let tokenNumber = 0;
    let lineStartPos = 1;
 
-   console.log(src);
    function inc() {
       char++;
       itter++;
@@ -68,6 +67,7 @@ export function tokenize(src) {
       });
    }
 
+   console.log(src);
    while (itter < src.length) {
       let chunk = "";
       let usefullVar;
@@ -105,9 +105,8 @@ export function tokenize(src) {
          continue;
       } else if (operator.has(chunk)) {
          inc();
-         if (chunk === '"' || chunk === "'") {
-            let quoteType = chunk;
-            while (c() !== quoteType) {
+         if (chunk === '"') {
+            while (c() !== '"') {
                chunk += c();
                inc();
             }
@@ -120,7 +119,7 @@ export function tokenize(src) {
             chunk += c();
             inc();
          }
-         add(chunk, "operator", operator.get(chunk));
+         add(chunk, operator.get(chunk), "operator");
          continue;
       }
       console.error(

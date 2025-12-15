@@ -1,45 +1,51 @@
 const BEGIN = 1;
 const END = 1;
-function userCard() {
-   //function 'would' be `replaced` by "component"
-   <div style={styles.card}>
-      <img src={userCard.avatar} alt={userCard.name} />
-      <h2>{userCard.name}</h2>
-      <p>{userCard.email}</p>
-      <button style={styles.button}>View Profile</button>
-   </div>;
-
-   // <p>yo</p>
-// new comment
-   const styles = {
-      border: "2px solid purple",
-   };
-}
-
-<userCard name="Alice" email="alice@example.com" avatar="/avatar.png" />;
-const alfa = 1 + 4 * 2 - (1 + 1);
-const beta = alfa * 2;
-let charlie = beta * beta;
-function dodat(g, h) {
-   function doit(e, f) {
-      let a = 1 + 2 * 2;
-      const b = (c =  2);
-   }
-}
-const f = d + 1;
-var c = a * b;
-   lin d = 1;
 BEGIN;
 function one(n) {
-   function two(m){
+   function two(m) {
       return m + 1;
    }
-   let u = 4;
-   const p = 3;
-   return n + u * p + two(1);
+   return n + two(1);
 }
-let e = "str" + "ing";
 const pre = one(2) + 1;
+lin div = <div id="a_div">this is a div</div>;
+if (1 === 1){
+   console.log('yayyyyyyyyyyy!!!!!!');
+}
 END;
-const a = d + 2 + noVar;
-const b = 2 + 2 + d;
+let u = 4;
+const p = 3;
+let e = "str" + "ing";
+
+// const a = d + 2;
+// const b = 2 + 2 + d;
+
+// function userCard() {
+//    //function 'would' be `replaced` by "component"
+//    <div style={styles.card}>
+//       <img src={userCard.avatar} alt={userCard.name} />
+//       <h2>{userCard.name}</h2>
+//       <p>{userCard.email}</p>
+//       <button style={styles.button}>View Profile</button>
+//    </div>;
+//
+//    // <p>yo</p>
+// // new comment
+//    const styles = {
+//       border: "2px solid purple",
+//    };
+// }
+//
+// <userCard name="Alice" email="alice@example.com" avatar="/avatar.png" />;
+// const alfa = 1 + 4 * 2 - (1 + 1);
+// const beta = alfa * 2;
+// let charlie = beta * beta;
+// function dodat(g, h) {
+//    function doit(e, f) {
+//       let a = 1 + 2 * 2;
+//       const b = (c =  2);
+//    }
+// }
+// const f = d + 1;
+// var c = a * b;
+//    lin d = 1;

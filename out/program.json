@@ -3,289 +3,412 @@
   "expr": [
     {
       "type": "function_declaration",
-      "name": "two",
-      "params": [
-        "m"
-      ],
-      "tokenRange": [
-        4,
-        30
-      ],
-      "expr": [
-        {
-          "type": "return_statement",
-          "evaluated": false,
-          "expr": [
-            {
-              "value": "m",
-              "length": 1,
-              "type": "word",
-              "kind": "identifier",
-              "position": 34,
-              "line": 2,
-              "start_col": 14,
-              "end_col": 14,
-              "token_num": 20
-            },
-            {
-              "value": "+",
-              "length": 1,
-              "type": "plus",
-              "kind": "operator",
-              "position": 36,
-              "line": 2,
-              "start_col": 16,
-              "end_col": 16,
-              "token_num": 22
-            },
-            {
-              "value": "1",
-              "length": 1,
-              "type": "number",
-              "kind": "numeric_lit",
-              "position": 38,
-              "line": 2,
-              "start_col": 18,
-              "end_col": 18,
-              "token_num": 24
-            }
-          ]
-        },
-        {
-          "value": "}",
-          "length": 1,
-          "type": "close_curly",
-          "kind": "operator",
-          "position": 44,
-          "line": 3,
-          "start_col": 4,
-          "end_col": 4,
-          "token_num": 30
-        }
-      ]
-    },
-    {
-      "type": "function_declaration",
       "name": "one",
       "params": [
         "n"
       ],
       "tokenRange": [
-        32,
-        82
+        1,
+        59
       ],
       "expr": [
         {
-          "type": "let_declaration",
-          "name": "u",
-          "evaluated": 4,
+          "type": "function_declaration",
+          "name": "two",
+          "params": [
+            "m"
+          ],
+          "tokenRange": [
+            13,
+            45
+          ],
           "expr": [
             {
-              "value": "4",
-              "length": 1,
-              "type": "number",
-              "kind": "numeric_lit",
-              "position": 75,
-              "line": 5,
-              "start_col": 12,
-              "end_col": 12,
-              "token_num": 50
-            }
-          ]
-        },
-        {
-          "type": "const_declaration",
-          "name": "p",
-          "evaluated": 3,
-          "expr": [
+              "type": "return_statement",
+              "expr": [
+                {
+                  "value": "m",
+                  "length": 1,
+                  "type": "word",
+                  "kind": "identifier",
+                  "position": 53,
+                  "line": 3,
+                  "start_col": 14,
+                  "end_col": 14,
+                  "token_num": 30
+                },
+                {
+                  "value": "+",
+                  "length": 1,
+                  "type": "operator",
+                  "kind": "plus",
+                  "position": 55,
+                  "line": 3,
+                  "start_col": 16,
+                  "end_col": 16,
+                  "token_num": 32
+                },
+                {
+                  "value": "1",
+                  "length": 1,
+                  "type": "number",
+                  "kind": "numeric_lit",
+                  "position": 57,
+                  "line": 3,
+                  "start_col": 18,
+                  "end_col": 18,
+                  "token_num": 34
+                }
+              ]
+            },
             {
-              "value": "3",
+              "value": "}",
               "length": 1,
-              "type": "number",
-              "kind": "numeric_lit",
-              "position": 91,
-              "line": 6,
-              "start_col": 14,
-              "end_col": 14,
-              "token_num": 62
+              "type": "operator",
+              "kind": "close_curly",
+              "position": 63,
+              "line": 4,
+              "start_col": 4,
+              "end_col": 4,
+              "token_num": 40
             }
           ]
         },
         {
           "type": "return_statement",
-          "evaluated": false,
           "expr": [
             {
-              "value": "n",
-              "length": 1,
-              "type": "word",
-              "kind": "identifier",
-              "position": 104,
-              "line": 7,
-              "start_col": 11,
-              "end_col": 11,
-              "token_num": 70
-            },
-            {
-              "value": "+",
-              "length": 1,
-              "type": "plus",
-              "kind": "operator",
-              "position": 106,
-              "line": 7,
-              "start_col": 13,
-              "end_col": 13,
-              "token_num": 72
-            },
-            {
-              "value": "u",
-              "length": 1,
-              "type": "word",
-              "kind": "identifier",
-              "position": 108,
-              "line": 7,
-              "start_col": 15,
-              "end_col": 15,
-              "token_num": 74
-            },
-            {
-              "value": "*",
-              "length": 1,
-              "type": "star",
-              "kind": "operator",
-              "position": 110,
-              "line": 7,
-              "start_col": 17,
-              "end_col": 17,
-              "token_num": 76
-            },
-            {
-              "value": "p",
-              "length": 1,
-              "type": "word",
-              "kind": "identifier",
-              "position": 112,
-              "line": 7,
-              "start_col": 19,
-              "end_col": 19,
-              "token_num": 78
+              "type": "func_call",
+              "name": "two",
+              "args": [
+                "1"
+              ]
             }
           ]
         },
         {
           "value": "}",
           "length": 1,
-          "type": "close_curly",
-          "kind": "operator",
-          "position": 116,
-          "line": 8,
+          "type": "operator",
+          "kind": "close_curly",
+          "position": 87,
+          "line": 6,
           "start_col": 1,
           "end_col": 1,
-          "token_num": 82
-        }
-      ]
-    },
-    {
-      "type": "let_declaration",
-      "name": "e",
-      "evaluated": "\"string\"",
-      "expr": [
-        {
-          "value": "\"str\"",
-          "length": 5,
-          "type": "string",
-          "kind": "literal",
-          "position": 126,
-          "line": 9,
-          "start_col": 9,
-          "end_col": 13,
-          "token_num": 90
-        },
-        {
-          "value": "+",
-          "length": 1,
-          "type": "plus",
-          "kind": "operator",
-          "position": 132,
-          "line": 9,
-          "start_col": 15,
-          "end_col": 15,
-          "token_num": 92
-        },
-        {
-          "value": "\"ing\"",
-          "length": 5,
-          "type": "string",
-          "kind": "literal",
-          "position": 134,
-          "line": 9,
-          "start_col": 17,
-          "end_col": 21,
-          "token_num": 94
+          "token_num": 57
         }
       ]
     },
     {
       "type": "const_declaration",
       "name": "pre",
-      "evaluated": 17,
       "expr": [
         {
           "type": "func_call",
           "name": "one",
           "args": [
             "2"
-          ],
-          "evaluated": 14,
-          "fnRef": "one",
-          "fnLin": [
-            1
           ]
         },
         {
           "value": "+",
           "length": 1,
-          "type": "plus",
-          "kind": "operator",
-          "position": 160,
-          "line": 10,
+          "type": "operator",
+          "kind": "plus",
+          "position": 108,
+          "line": 7,
           "start_col": 20,
           "end_col": 20,
-          "token_num": 108
+          "token_num": 70
         },
         {
           "value": "1",
           "length": 1,
           "type": "number",
           "kind": "numeric_lit",
-          "position": 162,
-          "line": 10,
+          "position": 110,
+          "line": 7,
           "start_col": 22,
           "end_col": 22,
-          "token_num": 110
-        },
+          "token_num": 72
+        }
+      ]
+    },
+    {
+      "type": "lin_declaration",
+      "name": "div",
+      "expr": [
         {
-          "value": "+",
+          "value": "<",
           "length": 1,
-          "type": "plus",
-          "kind": "operator",
-          "position": 163,
-          "line": 10,
-          "start_col": 23,
-          "end_col": 23,
-          "token_num": 111
+          "type": "operator",
+          "kind": "less_than",
+          "position": 123,
+          "line": 8,
+          "start_col": 11,
+          "end_col": 11,
+          "token_num": 81
         },
         {
-          "type": "func_call",
-          "name": "two",
-          "args": [
-            "1"
-          ],
-          "evaluated": 2,
-          "fnRef": "two",
-          "fnLin": [
-            0
-          ]
+          "value": "div",
+          "length": 3,
+          "type": "word",
+          "kind": "identifier",
+          "position": 124,
+          "line": 8,
+          "start_col": 12,
+          "end_col": 14,
+          "token_num": 82
+        },
+        {
+          "value": "id",
+          "length": 2,
+          "type": "word",
+          "kind": "identifier",
+          "position": 128,
+          "line": 8,
+          "start_col": 16,
+          "end_col": 17,
+          "token_num": 84
+        },
+        {
+          "value": "=",
+          "length": 1,
+          "type": "operator",
+          "kind": "equals",
+          "position": 130,
+          "line": 8,
+          "start_col": 18,
+          "end_col": 18,
+          "token_num": 85
+        },
+        {
+          "value": "\"a_div\"",
+          "length": 7,
+          "type": "string",
+          "kind": "literal",
+          "position": 131,
+          "line": 8,
+          "start_col": 19,
+          "end_col": 25,
+          "token_num": 86
+        },
+        {
+          "value": ">",
+          "length": 1,
+          "type": "operator",
+          "kind": "greater_than",
+          "position": 138,
+          "line": 8,
+          "start_col": 26,
+          "end_col": 26,
+          "token_num": 87
+        },
+        {
+          "value": "this",
+          "length": 4,
+          "type": "word",
+          "kind": "keyword",
+          "position": 139,
+          "line": 8,
+          "start_col": 27,
+          "end_col": 30,
+          "token_num": 88
+        },
+        {
+          "value": "is",
+          "length": 2,
+          "type": "word",
+          "kind": "identifier",
+          "position": 144,
+          "line": 8,
+          "start_col": 32,
+          "end_col": 33,
+          "token_num": 90
+        },
+        {
+          "value": "a",
+          "length": 1,
+          "type": "word",
+          "kind": "identifier",
+          "position": 147,
+          "line": 8,
+          "start_col": 35,
+          "end_col": 35,
+          "token_num": 92
+        },
+        {
+          "value": "div",
+          "length": 3,
+          "type": "word",
+          "kind": "identifier",
+          "position": 149,
+          "line": 8,
+          "start_col": 37,
+          "end_col": 39,
+          "token_num": 94
+        },
+        {
+          "value": "<",
+          "length": 1,
+          "type": "operator",
+          "kind": "less_than",
+          "position": 152,
+          "line": 8,
+          "start_col": 40,
+          "end_col": 40,
+          "token_num": 95
+        },
+        {
+          "value": "/",
+          "length": 1,
+          "type": "operator",
+          "kind": "forward_slash",
+          "position": 153,
+          "line": 8,
+          "start_col": 41,
+          "end_col": 41,
+          "token_num": 96
+        },
+        {
+          "value": "div",
+          "length": 3,
+          "type": "word",
+          "kind": "identifier",
+          "position": 154,
+          "line": 8,
+          "start_col": 42,
+          "end_col": 44,
+          "token_num": 97
+        },
+        {
+          "value": ">",
+          "length": 1,
+          "type": "operator",
+          "kind": "greater_than",
+          "position": 157,
+          "line": 8,
+          "start_col": 45,
+          "end_col": 45,
+          "token_num": 98
+        }
+      ]
+    },
+    {
+      "type": "conditional_statement",
+      "value": "if",
+      "loop": false,
+      "condition": [
+        "1",
+        "===",
+        "1"
+      ],
+      "tokenRange": [
+        101,
+        125
+      ],
+      "expr": [
+        {
+          "value": "console",
+          "length": 7,
+          "type": "word",
+          "kind": "identifier",
+          "position": 177,
+          "line": 10,
+          "start_col": 4,
+          "end_col": 10,
+          "token_num": 115
+        },
+        {
+          "value": ".",
+          "length": 1,
+          "type": "operator",
+          "kind": "dot",
+          "position": 184,
+          "line": 10,
+          "start_col": 11,
+          "end_col": 11,
+          "token_num": 116
+        },
+        {
+          "value": "log",
+          "length": 3,
+          "type": "word",
+          "kind": "identifier",
+          "position": 185,
+          "line": 10,
+          "start_col": 12,
+          "end_col": 14,
+          "token_num": 117
+        },
+        {
+          "value": "(",
+          "length": 1,
+          "type": "operator",
+          "kind": "open_paren",
+          "position": 188,
+          "line": 10,
+          "start_col": 15,
+          "end_col": 15,
+          "token_num": 118
+        },
+        {
+          "value": "'yayyyyyyyyyyy!!!!!!'",
+          "length": 21,
+          "type": "string",
+          "kind": "literal",
+          "position": 189,
+          "line": 10,
+          "start_col": 16,
+          "end_col": 36,
+          "token_num": 119
+        },
+        {
+          "value": ")",
+          "length": 1,
+          "type": "operator",
+          "kind": "close_paren",
+          "position": 210,
+          "line": 10,
+          "start_col": 37,
+          "end_col": 37,
+          "token_num": 120
+        },
+        {
+          "value": ";",
+          "length": 1,
+          "type": "operator",
+          "kind": "semi_colon",
+          "position": 211,
+          "line": 10,
+          "start_col": 38,
+          "end_col": 38,
+          "token_num": 121
+        },
+        {
+          "value": "}",
+          "length": 1,
+          "type": "operator",
+          "kind": "close_curly",
+          "position": 213,
+          "line": 11,
+          "start_col": 1,
+          "end_col": 1,
+          "token_num": 123
+        },
+        {
+          "value": "EOF",
+          "length": 3,
+          "type": "EOF",
+          "kind": "EOF",
+          "position": 212,
+          "line": 12,
+          "start_col": -2,
+          "end_col": 0,
+          "token_num": 125
+        },
+        {
+          "type": "EOF"
         }
       ]
     }

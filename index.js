@@ -6,10 +6,11 @@ import {
    ditchWhite,
    access,
    globalEnv,
-} from "./dep/lib";
-import { tokenize } from "./dep/lexer";
+} from "./dep/lib.js";
+import { tokenize } from "./dep/lexer.js";
 import { Environment } from "./dep/env.js";
-import { parse } from "./dep/parser.js";
+// import { parse } from "./dep/parser.js";
+import { parse } from "./dep/newParser.js";
 import { output } from "./dep/output.js";
 import { outOpt } from "./dep/outOpt.js";
 import err from "./dep/error.js";
