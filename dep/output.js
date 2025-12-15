@@ -39,13 +39,20 @@ export function output(input) {
                fn_declaration(exp);
                break;
             case "return_statement":
+               // console.log(exp.type);
                apStr += "return ";
                return_statement(exp);
+               break;
+            case "conditional_statement":
+               conditional_statement(exp);
                break;
             case "func_call":
                func_call(exp);
                break;
+            case "EOF":
+               break;
             default:
+               // console.log(apStr, "\n");
                apStr += exp.value + " ";
             // console.error("got nothing here ", exp);
             // err(`output error on: ${exp}`);
@@ -68,6 +75,7 @@ export function output(input) {
    }
 
    function return_statement(exp) {
+      // console.log(exp);
       run(exp);
       apStr += ";\n";
    }
@@ -80,11 +88,17 @@ export function output(input) {
       if ("expr" in exp) {
          run(exp);
       } else {
+         console.log("variable_declaration: what was i thinking?");
          for (const tk in exp.expr) {
             apStr += tk.value + " ";
          }
       }
       // }
+   }
+
+   function conditional_statement(exp) {
+      apStr += exp.value + " (" + exp.condition + "){\n";
+      if ("expr" in exp) run(exp);
    }
 
    function fn_declaration(exp) {

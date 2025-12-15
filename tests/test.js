@@ -8,9 +8,9 @@ function one(n) {
    return n + two(1);
 }
 const pre = one(2) + 1;
-lin div = <div id="a_div">this is a div</div>;
-if (1 === 1){
-   console.log('yayyyyyyyyyyy!!!!!!');
+const div = <div id="a_div">this is a div</div>;
+if (1 === 1) {
+   console.log("yayyyyyyyyyyy!!!!!!");
 }
 END;
 let u = 4;

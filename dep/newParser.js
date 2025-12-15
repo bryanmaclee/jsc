@@ -13,7 +13,9 @@ const eof = {
    kind: "EOF",
 };
 
-export function parse(tokens, environment) {
+export function parse(tokens, environment, log = false) {
+   if (log) console.log(tokens);
+   let scope = 0;
    let outStr = "";
    for (const token of tokens) {
       outStr += token.value;
@@ -25,9 +27,9 @@ export function parse(tokens, environment) {
    while (token && token?.type !== "EOF") {
       const stmt = fig(token, environment);
       // console.log("24: ", token.value);
-      if (stmt) statements.push(stmt);
-      if (!stmt && statements.length) {
-         // unhandledTokens.push(token);
+      if (stmt) {
+         statements.push(stmt);
+      } else {
          statements.push(token);
       }
       token = eat();
@@ -46,13 +48,13 @@ export function parse(tokens, environment) {
       return tokens[iter - 1];
    }
 
-   function at() {
+   function at(i = 0) {
       while (tokens[iter]?.kind === "format") iter++;
-      return tokens[iter];
+      return tokens[iter + i];
    }
 
    function fig(token, env) {
-      console.log(token.value);
+      // console.log(token.value);
       switch (token.type) {
          case "word":
             switch (token.kind) {
@@ -103,9 +105,11 @@ export function parse(tokens, environment) {
             }
          case "white_space":
          case "new_line":
+         case "string":
+         case "operator":
             break;
          default:
-            // console.log("PARSER found unrecognized token: ", token.value);
+            console.log("PARSER found unrecognized token: ", token.value);
             return false;
       }
    }
@@ -165,30 +169,34 @@ export function parse(tokens, environment) {
    }
 
    function func(token, env) {
+      // console.log(token, at(1), at(2), at(3), at(4), at(5));
       const tokenRange = [token.token_num];
-      let scp = 1;
+      let scp = 0;
       const stmt = [];
       const returnStmt = [];
       const fnName = eat();
       eat();
       let next = eat();
       const params = [];
+      // console.log(next);
       while (next.kind !== "close_paren") {
          params.push(next.value);
          next = eat();
       }
-      eat();
-      let retAt = 0;
-      while (scp !== 0) {
-         next = eat();
+      next = eat();
+      let first = true;
+      while (scp !== 0 || first) {
+         first = false;
          if (next.value === "}") {
+            scope--;
             scp--;
          } else if (next.value === "{") {
+            scope++;
             scp++;
          }
-         if (next.value === "return" && scp === "}") retAt = stmt.length;
          stmt.push(next);
-         next = at();
+
+         next = eat();
       }
       const newEnv = Environment(env, fnName.value, "function");
       newEnv.params = [];
@@ -203,14 +211,14 @@ export function parse(tokens, environment) {
          params: params,
          expr: stmt,
       });
-      // console.log(stmt);
+      console.log("the statement: ", stmt);
       return {
          type: "function_declaration",
+         scope: scope,
          name: fnName.value,
          params: params,
          tokenRange: tokenRange,
          expr: parse(stmt, newEnv),
-         // expr: stmt,
       };
    }
 
@@ -265,7 +273,7 @@ export function parse(tokens, environment) {
          next = eat();
       }
       expr.push(eof);
-      const parsed = parse(expr, env);
+      const parsed = parse(expr, env, true);
       return {
          type: "return_statement",
          expr: parsed,
@@ -280,11 +288,12 @@ export function parse(tokens, environment) {
       const stmt = [];
       eat();
       let next = eat();
-      const condition = [];
+      let condition = "";
       while (next.kind !== "close_paren") {
-         condition.push(next.value);
+         condition += next.value + " ";
          next = eat();
       }
+      condition = condition.substring(0, condition.length - 1);
       eat();
       while (scp !== 0) {
          next = eat();
@@ -329,7 +338,7 @@ export function parse(tokens, environment) {
       const lin = env.Lineage;
       if (is_set) return set_val;
       const erStr = `function ${qry} dose not exist`;
-      console.trace();
+      // console.trace();
       err(erStr, 1);
       return false;
    }

@@ -407,14 +407,14 @@
     "token_num": 73
   },
   {
-    "value": "lin",
-    "length": 3,
+    "value": "const",
+    "length": 5,
     "type": "word",
     "kind": "keyword",
     "position": 113,
     "line": 8,
     "start_col": 1,
-    "end_col": 3,
+    "end_col": 5,
     "token_num": 75
   },
   {
@@ -422,10 +422,10 @@
     "length": 3,
     "type": "word",
     "kind": "identifier",
-    "position": 117,
+    "position": 119,
     "line": 8,
-    "start_col": 5,
-    "end_col": 7,
+    "start_col": 7,
+    "end_col": 9,
     "token_num": 77
   },
   {
@@ -433,10 +433,10 @@
     "length": 1,
     "type": "operator",
     "kind": "equals",
-    "position": 121,
+    "position": 123,
     "line": 8,
-    "start_col": 9,
-    "end_col": 9,
+    "start_col": 11,
+    "end_col": 11,
     "token_num": 79
   },
   {
@@ -444,10 +444,10 @@
     "length": 1,
     "type": "operator",
     "kind": "less_than",
-    "position": 123,
+    "position": 125,
     "line": 8,
-    "start_col": 11,
-    "end_col": 11,
+    "start_col": 13,
+    "end_col": 13,
     "token_num": 81
   },
   {
@@ -455,10 +455,10 @@
     "length": 3,
     "type": "word",
     "kind": "identifier",
-    "position": 124,
+    "position": 126,
     "line": 8,
-    "start_col": 12,
-    "end_col": 14,
+    "start_col": 14,
+    "end_col": 16,
     "token_num": 82
   },
   {
@@ -466,10 +466,10 @@
     "length": 2,
     "type": "word",
     "kind": "identifier",
-    "position": 128,
+    "position": 130,
     "line": 8,
-    "start_col": 16,
-    "end_col": 17,
+    "start_col": 18,
+    "end_col": 19,
     "token_num": 84
   },
   {
@@ -477,10 +477,10 @@
     "length": 1,
     "type": "operator",
     "kind": "equals",
-    "position": 130,
+    "position": 132,
     "line": 8,
-    "start_col": 18,
-    "end_col": 18,
+    "start_col": 20,
+    "end_col": 20,
     "token_num": 85
   },
   {
@@ -488,10 +488,10 @@
     "length": 7,
     "type": "string",
     "kind": "literal",
-    "position": 131,
+    "position": 133,
     "line": 8,
-    "start_col": 19,
-    "end_col": 25,
+    "start_col": 21,
+    "end_col": 27,
     "token_num": 86
   },
   {
@@ -499,10 +499,10 @@
     "length": 1,
     "type": "operator",
     "kind": "greater_than",
-    "position": 138,
+    "position": 140,
     "line": 8,
-    "start_col": 26,
-    "end_col": 26,
+    "start_col": 28,
+    "end_col": 28,
     "token_num": 87
   },
   {
@@ -510,10 +510,10 @@
     "length": 4,
     "type": "word",
     "kind": "keyword",
-    "position": 139,
+    "position": 141,
     "line": 8,
-    "start_col": 27,
-    "end_col": 30,
+    "start_col": 29,
+    "end_col": 32,
     "token_num": 88
   },
   {
@@ -521,10 +521,10 @@
     "length": 2,
     "type": "word",
     "kind": "identifier",
-    "position": 144,
+    "position": 146,
     "line": 8,
-    "start_col": 32,
-    "end_col": 33,
+    "start_col": 34,
+    "end_col": 35,
     "token_num": 90
   },
   {
@@ -532,10 +532,10 @@
     "length": 1,
     "type": "word",
     "kind": "identifier",
-    "position": 147,
+    "position": 149,
     "line": 8,
-    "start_col": 35,
-    "end_col": 35,
+    "start_col": 37,
+    "end_col": 37,
     "token_num": 92
   },
   {
@@ -543,10 +543,10 @@
     "length": 3,
     "type": "word",
     "kind": "identifier",
-    "position": 149,
+    "position": 151,
     "line": 8,
-    "start_col": 37,
-    "end_col": 39,
+    "start_col": 39,
+    "end_col": 41,
     "token_num": 94
   },
   {
@@ -554,10 +554,10 @@
     "length": 1,
     "type": "operator",
     "kind": "less_than",
-    "position": 152,
+    "position": 154,
     "line": 8,
-    "start_col": 40,
-    "end_col": 40,
+    "start_col": 42,
+    "end_col": 42,
     "token_num": 95
   },
   {
@@ -565,10 +565,10 @@
     "length": 1,
     "type": "operator",
     "kind": "forward_slash",
-    "position": 153,
+    "position": 155,
     "line": 8,
-    "start_col": 41,
-    "end_col": 41,
+    "start_col": 43,
+    "end_col": 43,
     "token_num": 96
   },
   {
@@ -576,10 +576,10 @@
     "length": 3,
     "type": "word",
     "kind": "identifier",
-    "position": 154,
+    "position": 156,
     "line": 8,
-    "start_col": 42,
-    "end_col": 44,
+    "start_col": 44,
+    "end_col": 46,
     "token_num": 97
   },
   {
@@ -587,10 +587,10 @@
     "length": 1,
     "type": "operator",
     "kind": "greater_than",
-    "position": 157,
+    "position": 159,
     "line": 8,
-    "start_col": 45,
-    "end_col": 45,
+    "start_col": 47,
+    "end_col": 47,
     "token_num": 98
   },
   {
@@ -598,10 +598,10 @@
     "length": 1,
     "type": "operator",
     "kind": "semi_colon",
-    "position": 158,
+    "position": 160,
     "line": 8,
-    "start_col": 46,
-    "end_col": 46,
+    "start_col": 48,
+    "end_col": 48,
     "token_num": 99
   },
   {
@@ -609,7 +609,7 @@
     "length": 2,
     "type": "word",
     "kind": "keyword",
-    "position": 160,
+    "position": 162,
     "line": 9,
     "start_col": 1,
     "end_col": 2,
@@ -620,7 +620,7 @@
     "length": 1,
     "type": "operator",
     "kind": "open_paren",
-    "position": 163,
+    "position": 165,
     "line": 9,
     "start_col": 4,
     "end_col": 4,
@@ -631,7 +631,7 @@
     "length": 1,
     "type": "number",
     "kind": "numeric_lit",
-    "position": 164,
+    "position": 166,
     "line": 9,
     "start_col": 5,
     "end_col": 5,
@@ -642,7 +642,7 @@
     "length": 3,
     "type": "operator",
     "kind": "strict_equality",
-    "position": 166,
+    "position": 168,
     "line": 9,
     "start_col": 7,
     "end_col": 9,
@@ -653,7 +653,7 @@
     "length": 1,
     "type": "number",
     "kind": "numeric_lit",
-    "position": 170,
+    "position": 172,
     "line": 9,
     "start_col": 11,
     "end_col": 11,
@@ -664,7 +664,7 @@
     "length": 1,
     "type": "operator",
     "kind": "close_paren",
-    "position": 171,
+    "position": 173,
     "line": 9,
     "start_col": 12,
     "end_col": 12,
@@ -675,109 +675,109 @@
     "length": 1,
     "type": "operator",
     "kind": "open_curly",
-    "position": 172,
+    "position": 175,
     "line": 9,
-    "start_col": 13,
-    "end_col": 13,
-    "token_num": 110
+    "start_col": 14,
+    "end_col": 14,
+    "token_num": 111
   },
   {
     "value": "console",
     "length": 7,
     "type": "word",
     "kind": "identifier",
-    "position": 177,
+    "position": 180,
     "line": 10,
     "start_col": 4,
     "end_col": 10,
-    "token_num": 115
+    "token_num": 116
   },
   {
     "value": ".",
     "length": 1,
     "type": "operator",
     "kind": "dot",
-    "position": 184,
+    "position": 187,
     "line": 10,
     "start_col": 11,
     "end_col": 11,
-    "token_num": 116
+    "token_num": 117
   },
   {
     "value": "log",
     "length": 3,
     "type": "word",
     "kind": "identifier",
-    "position": 185,
+    "position": 188,
     "line": 10,
     "start_col": 12,
     "end_col": 14,
-    "token_num": 117
+    "token_num": 118
   },
   {
     "value": "(",
     "length": 1,
     "type": "operator",
     "kind": "open_paren",
-    "position": 188,
+    "position": 191,
     "line": 10,
     "start_col": 15,
     "end_col": 15,
-    "token_num": 118
+    "token_num": 119
   },
   {
-    "value": "'yayyyyyyyyyyy!!!!!!'",
+    "value": "\"yayyyyyyyyyyy!!!!!!\"",
     "length": 21,
     "type": "string",
     "kind": "literal",
-    "position": 189,
+    "position": 192,
     "line": 10,
     "start_col": 16,
     "end_col": 36,
-    "token_num": 119
+    "token_num": 120
   },
   {
     "value": ")",
     "length": 1,
     "type": "operator",
     "kind": "close_paren",
-    "position": 210,
+    "position": 213,
     "line": 10,
     "start_col": 37,
     "end_col": 37,
-    "token_num": 120
+    "token_num": 121
   },
   {
     "value": ";",
     "length": 1,
     "type": "operator",
     "kind": "semi_colon",
-    "position": 211,
+    "position": 214,
     "line": 10,
     "start_col": 38,
     "end_col": 38,
-    "token_num": 121
+    "token_num": 122
   },
   {
     "value": "}",
     "length": 1,
     "type": "operator",
     "kind": "close_curly",
-    "position": 213,
+    "position": 216,
     "line": 11,
     "start_col": 1,
     "end_col": 1,
-    "token_num": 123
+    "token_num": 124
   },
   {
     "value": "EOF",
     "length": 3,
     "type": "EOF",
     "kind": "EOF",
-    "position": 212,
+    "position": 215,
     "line": 12,
     "start_col": -2,
     "end_col": 0,
-    "token_num": 125
+    "token_num": 126
   }
 ]
