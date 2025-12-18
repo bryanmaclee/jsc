@@ -100,27 +100,15 @@ export function parse(tokens, log = false) {
    }
 
    function element(token) {
-      let elAr = [];
-      const elType = eat();
+      const elAr = [token, eat()];
       let next = eat();
       while (next.value !== ">") {
          elAr.push(next);
          next = eat();
       }
-      let found = false;
-      const childAr = [];
-      while (next && next.value !== "</") {
-         if (next.value === "</") found = true;
-         childAr.push(next);
-         next = eat();
-      }
-      if (!found) throw "didnt get it";
-
-      return {
-         type: "element",
-         kind: elType.value,
-         expr: elAr,
-      };
+      // elAr.push(next);
+      console.log(elAr);
+      return buildElement(elAr);
    }
 
    function expect(thing) {

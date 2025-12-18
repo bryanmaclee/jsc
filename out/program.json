@@ -7,7 +7,7 @@
       "expr": [
         {
           "type": "element",
-          "kind": "id",
+          "kind": "div",
           "expr": [
             {
               "value": "id",
@@ -30,6 +30,17 @@
               "start_col": 20,
               "end_col": 20,
               "token_num": 11
+            },
+            {
+              "value": "\"a_div\"",
+              "length": 7,
+              "type": "string",
+              "kind": "literal",
+              "position": 21,
+              "line": 1,
+              "start_col": 21,
+              "end_col": 27,
+              "token_num": 12
             }
           ]
         },
