@@ -3,15 +3,8 @@ import err from "./error.js";
 
 const breaker = "\n";
 export function output(input) {
-   // console.log(JSON.stringify(input, null, 3));
    let apStr = "";
    function run(inp) {
-      // console.log(
-      //    "the input: {\n",
-      //    inp.expr,
-      //    "\n\n}..........................done",
-      // );
-      // console.log(inp.expr);
       for (const exp of inp.expr) {
          switch (exp.type) {
             case "const_declaration":
@@ -52,15 +45,10 @@ export function output(input) {
             case "EOF":
                break;
             default:
-               // console.log(apStr, "\n");
                apStr += exp.value + " ";
-            // console.error("got nothing here ", exp);
-            // err(`output error on: ${exp}`);
          }
       }
    }
-   // console.log(globalEnv);
-   // console.log(apStr);
    run(input);
    return apStr;
 
@@ -70,21 +58,16 @@ export function output(input) {
          apStr += arg + ",";
       }
       apStr = apStr.slice(0, apStr.length - 1);
-      // console.log(apStr);
       apStr += ")";
    }
 
    function return_statement(exp) {
-      // console.log(exp);
       run(exp);
       apStr += ";\n";
    }
 
    function variable_declaration(exp) {
       apStr += exp.name + " = ";
-      // if (exp.evaluated) {
-      //    apStr += exp.evaluated;
-      // } else {
       if ("expr" in exp) {
          run(exp);
       } else {
@@ -93,7 +76,6 @@ export function output(input) {
             apStr += tk.value + " ";
          }
       }
-      // }
    }
 
    function conditional_statement(exp) {
@@ -103,50 +85,7 @@ export function output(input) {
 
    function fn_declaration(exp) {
       apStr += exp.name + "(" + exp.params.toString() + "){" + breaker;
-      // console.log("sompin hea    ", exp.expr);
       run(exp);
-      apStr += "\n";
-      // for (const st of exp.expr) {
-      //    if (st.type !== "EOF") {
-      //       if (st.value) {
-      //          apStr += st.value;
-      //       } else {
-      //          console.log("thie statement is: ", st);
-      //          run(st);
-      //       }
-      //       // console.log(st);
-      //       if (access.tokens[st.token_num]?.kind === "format") {
-      //          apStr += access.tokens[st.token_num].value;
-      //          continue;
-      //       }
-      //       // console.error("i dont know");
-      //    }
-      // }
-      // apStr += "};\n";
+      apStr += "}\n";
    }
 }
-
-// function let_declaration(exp) {
-//    apStr += exp.name + " = ";
-//    if (exp.evaluated) {
-//       apStr += exp.evaluated;
-//    }
-//    apStr += ";\n";
-// }
-//
-// function var_declaration(exp) {
-//    apStr += exp.name + " = ";
-//    if (exp.evaluated) {
-//       apStr += exp.evaluated;
-//    }
-//    apStr += ";\n";
-// }
-//
-// function lin_declaration(exp) {
-//    apStr += "const ";
-//    apStr += exp.name + " = ";
-//    if (exp.evaluated) {
-//       apStr += exp.evaluated;
-//    }
-//    apStr += ";  // this is a linear variable type\n";
-// }

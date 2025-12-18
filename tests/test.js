@@ -1,6 +1,5 @@
 const BEGIN = 1;
 const END = 1;
-BEGIN;
 function one(n) {
    function two(m) {
       return m + 1;
@@ -8,11 +7,12 @@ function one(n) {
    return n + two(1);
 }
 const pre = one(2) + 1;
+BEGIN;
 const div = <div id="a_div">this is a div</div>;
+END;
 if (1 === 1) {
    console.log("yayyyyyyyyyyy!!!!!!");
 }
-END;
 let u = 4;
 const p = 3;
 let e = "str" + "ing";

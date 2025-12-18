@@ -3,6 +3,7 @@ import { Environment } from "./env.js";
 import { tokenize } from "./lexer.js";
 import { globalEnv } from "./lib.js";
 import err from "./error.js";
+import { defined_element_lable, buildElement } from "./elements.js";
 
 const runTests = false;
 
@@ -13,18 +14,22 @@ const eof = {
    kind: "EOF",
 };
 
-export function parse(tokens, environment) {
+export function parse(tokens, log = false) {
+   // if (log) console.log(tokens);
+   let scope = 0;
+   let outStr = "";
+   for (const token of tokens) {
+      outStr += token.value;
+   }
    let iter = 0;
    const statements = [];
    let token = eat();
    const unhandledTokens = [];
-
    while (token && token?.type !== "EOF") {
-      const stmt = fig(token, environment);
-      // console.log("24: ", token.value);
-      if (stmt) statements.push(stmt);
-      if (!stmt && statements.length) {
-         // unhandledTokens.push(token);
+      const stmt = fig(token);
+      if (stmt) {
+         statements.push(stmt);
+      } else {
          statements.push(token);
       }
       token = eat();
@@ -43,69 +48,73 @@ export function parse(tokens, environment) {
       return tokens[iter - 1];
    }
 
-   function at() {
+   function at(i = 0) {
       while (tokens[iter]?.kind === "format") iter++;
-      return tokens[iter];
+      return tokens[iter + i];
    }
 
-   function fig(token, env) {
+   function fig(token) {
       switch (token.type) {
          case "word":
             switch (token.kind) {
                case "keyword":
-                  console.log(
-                     "62: ",
-                     token.value,
-                     token.token_num,
-                     env.Lineage,
-                  );
                   switch (token.value) {
                      case "function":
-                        return define(func, token, env);
+                        return define(func, token);
                      case "return":
-                        if (env.Type === "function") {
-                           return define(Return, token, env);
-                        }
+                        return define(Return, token);
                      case "const":
                      case "let":
                      case "var":
                      case "lin":
-                        return define(vars, token, env);
+                        return define(vars, token);
+                     case "if":
+                     case "while":
+                     case "for":
+                        return define(conditional, token);
                      default:
-                        // console.error(
-                        //    `keyword: < ${token.value} > has not been set up to parse`,
-                        // );
                         break;
-                  }
-                  if (env.Functions.has(token.value)) {
-                     return define(
-                        fn_call,
-                        token,
-                        Environment(env, "call", "call"),
-                     );
                   }
                case "identifier":
                   if (at().value === "(") {
-                     // if (!env.Functions.has(token.value)) {
-                     //    err(
-                     //       `function ${token.value} does not exist or is unaccessible`,
-                     //    );
-                     // }
-                     console.log("this by a func call");
-                     return define(fn_call, token, env);
+                     return define(fn_call, token);
                   }
-                  // console.log("unknown context of identifier", token.value);
                   break;
             }
+         case "white_space":
+         case "new_line":
+         case "string":
+         case "operator":
+            switch (token.kind) {
+               case "less_than":
+                  if (defined_element_lable(at())) {
+                     const elAr = [token, eat()];
+                     let next = eat();
+                     while (next.value !== ">") {
+                        elAr.push(next);
+                        next = eat();
+                     }
+                     elAr.push(next);
+                     console.log(buildElement(elAr));
+                     return buildElement(elAr);
+                  }
+                  break;
+            }
+            break;
          default:
-            // console.log("PARSER found unrecognized token: ", token.value);
+            console.log("PARSER found unrecognized token: ", token.value);
             return false;
       }
    }
 
+   // function element(token){
+
    function expect(thing) {
+      // console.log(thing);
       if (at().value !== thing) {
-         console.error(`expected ${thing}. got ${at()}.`);
+         console.error(
+            `expected ${thing}. got ${at().value} at line ${at().line} col ${at().start_col}.`,
+         );
          return false;
       }
       return eat();
@@ -115,118 +124,70 @@ export function parse(tokens, environment) {
       const tokenRange = [token.token_num];
       const k = cb(token, env);
       let temp = k.expr;
-      // if (!k?.expr?.at(-1)?.token_num) {
-      //    while ("expr" in temp) {
-      //       temp = temp.expr;
-      //    }
-      //    while (temp.length) temp = temp.at(-1);
-      //    tokenRange.push(temp.expr.at(-1).token_num);
-      // } else {
-      //    tokenRange.push(k.expr.at(-1).token_num);
-      // }
-      // k.tokenRange = tokenRange;
-      console.log("123: ", token.value, token.token_num, env.Lineage);
-      console.log("124: ", k.evaluated);
       return k;
    }
 
    function fn_call(token, env) {
-      console.log("128: ", token.value, env.Lineage);
       const tokenRange = [token.token_num];
       const callerName = token.value;
-      // const theFn = env.Functions.get(callerName);
-
-      const theFn = accessibleFuncs(token.value, env);
-      const fnEnv = theFn.environment;
-      fnEnv.Variables.clear();
-      fnEnv.UnUtilizedVars.clear();
-      fnEnv.Constants.clear();
       eat();
       let next = eat();
       const args = [];
-      while (next.type !== "close_paren") {
+      while (next.kind !== "close_paren") {
          if (args.length) {
             if (expect(",")) continue;
          }
          args.push(next.value);
-         fnEnv.assignVar(fnEnv.params[args.length - 1], next.value);
          next = eat();
       }
-      // for (const v of fnEnv.Constants) {
-      //    fnEnv.Variables.delete(v);
-      //    fnEnv.UnUtilizedVars.delete(v);
-      //    fnEnv.Constants.delete(v);
-      // }
-      const ev = parse(theFn.expr, fnEnv);
-      const returnEval = ev.filter((part) => part.type === "return_statement");
       return {
          type: "func_call",
          name: callerName,
          args: args,
-         evaluated: returnEval[0].evaluated,
-         fnRef: theFn.environment.Name,
-         fnLin: theFn.environment.Lineage,
-         // tokenRange: tokenRange,
       };
    }
 
    function func(token, env) {
       const tokenRange = [token.token_num];
-      let scp = 1;
+      let scp = 0;
       const stmt = [];
-      const returnStmt = [];
       const fnName = eat();
       eat();
       let next = eat();
       const params = [];
-      while (next.type !== "close_paren") {
+      while (next.kind !== "close_paren") {
          params.push(next.value);
          next = eat();
       }
-      eat();
-      next = eat();
-      let retAt = 0;
-      while (next.type !== "close_curly" && scp !== 0) {
-         if (next.value === "}") scp--;
-         else if (next.value === "{") scp++;
-         if (next.value === "return" && scp === "}") retAt = stmt.length;
-         stmt.push(next);
+      let first = true;
+      while (scp !== 0 || first) {
+         first = false;
          next = eat();
+         if (next.value === "}") {
+            scope--;
+            scp--;
+            if (scp !== 0) stmt.push(next);
+         } else if (next.value === "{") {
+            if (scp !== 0) stmt.push(next);
+            scope++;
+            scp++;
+         } else {
+            stmt.push(next);
+         }
       }
-      stmt.push(next);
-      // const retStmt = stmt.splice(retAt, stmt.length - 1);
-      // stmt.push(eof);
-      // retStmt.push(eof);
-      const newEnv = Environment(env, fnName.value, "function");
-      newEnv.params = [];
-      for (const par of params) {
-         newEnv.declareVar(par, "let");
-         newEnv.params.push(par);
-      }
-      env.Children.push(newEnv);
       tokenRange.push(next.token_num);
-      // console.log("the func is onnnnnnnnnnnnnnnnnn");
-      env.assignFn(fnName.value, {
-         environment: newEnv,
-         params: params,
-         expr: stmt,
-         // ret: retStmt,
-      });
-      // console.log(env.Functions);
       return {
          type: "function_declaration",
+         scope: scope,
          name: fnName.value,
          params: params,
          tokenRange: tokenRange,
-         // expr: parse(stmt.toSpliced(retAt, 0, ...retStmt), newEnv),
-         expr: parse(stmt, newEnv),
-         // expr: stmt,
+         expr: parse(stmt),
       };
    }
 
    function vars(token, env) {
       const varName = eat().value;
-      // console.log("this is in the vars function: ", varName);
       eat();
       let stmt = [];
       let next = eat();
@@ -234,7 +195,7 @@ export function parse(tokens, environment) {
       let bScp = 0;
       while (
          (next !== undefined &&
-            next.type !== "semi_colon" &&
+            next.kind !== "semi_colon" &&
             next.kind !== "EOF") ||
          bScp !== 0 ||
          pScp !== 0
@@ -253,51 +214,19 @@ export function parse(tokens, environment) {
                bScp--;
                break;
          }
-         // if (next.type === "word") {
-         //    if (env.Functions.has(next.value)) {
-         //       const callAr = [next];
-         //       next = eat();
-         //       while (next.value !== ")") {
-         //          if (next.value !== ",") callAr.push(next);
-         //          next = eat();
-         //       }
-         //       callAr.push(next);
-         //       callAr.push(eof);
-         //       console.log(callAr);
-         //       const ans = parse(callAr, env)[0];
-         //       stmt.push({
-         //          value: ans,
-         //          type: "number",
-         //          kind: "numeric_lit",
-         //       });
-         //       next = eat();
-         //    }
-         // }
          stmt.push(next);
          next = eat();
       }
-      // console.log(stmt);
       stmt.push(eof);
-      env.declareVar(varName, token.value);
-      // console.log(stmt);
       stmt = parse(stmt, env);
-      // console.log(stmt);
-      const toBun = passToBun(stmt, env);
-      if (toBun) {
-         env.assignVar(varName, toBun, token.value);
-      } else {
-         env.assignVar(varName, undefined, token.value);
-      }
       return {
          type: `${token.value}_declaration`,
          name: varName,
-         evaluated: toBun,
          expr: parse(stmt, env),
       };
    }
 
    function Return(token, env) {
-      console.log("294: ", token.value, env.Lineage);
       let next = eat();
       let scp = 1;
       const expr = [];
@@ -306,12 +235,9 @@ export function parse(tokens, environment) {
          next = eat();
       }
       expr.push(eof);
-      const parsed = parse(expr, env);
-      // return passToBun(parse(expr, env), env);
-      // console.log(parsed);
+      const parsed = parse(expr, env, true);
       return {
          type: "return_statement",
-         evaluated: passToBun(parsed, env),
          expr: parsed,
       };
    }
@@ -319,40 +245,41 @@ export function parse(tokens, environment) {
    function conditional(token, env) {
       const tokenRange = [token.token_num];
       let scp = 1;
+      const loop =
+         token.value === "while" || token.value === "for" ? true : false;
       const stmt = [];
-      const fnName = eat();
       eat();
       let next = eat();
-      const params = [];
-      while (next.type !== "close_paren") {
-         params.push(next.value);
+      let condition = "";
+      while (next.kind !== "close_paren") {
+         condition += next.value + " ";
          next = eat();
       }
+      condition = condition.substring(0, condition.length - 1);
       eat();
-      next = eat();
-      while (next.type !== "close_curly" && scp !== 0) {
+      while (scp !== 0) {
+         next = eat();
          stmt.push(next);
          if (next.value === "}") scp--;
          else if (next.value === "{") scp++;
-         next = eat();
+         next = at();
       }
       stmt.push(next);
       stmt.push({ type: "EOF" });
-      const newEnv = Environment(env, fnName.value, "function");
-      // console.log("back into parse");
-      parse(stmt, newEnv);
-      env.Children.push(newEnv);
+      // const newEnv = Environment(env, "anonymous", "conditional");
+      parse(stmt);
+      // env.Children.push(newEnv);
       tokenRange.push(next.token_num);
-      env.assignFn(fnName.value);
       return type_checker(
          {
-            type: "function_declaration",
-            name: fnName.value,
-            params: params,
+            type: "conditional_statement",
+            value: token.value,
+            loop: loop,
+            condition: condition,
             tokenRange: tokenRange,
             expr: stmt,
          },
-         env,
+         // env,
       );
    }
 
@@ -373,6 +300,7 @@ export function parse(tokens, environment) {
       const lin = env.Lineage;
       if (is_set) return set_val;
       const erStr = `function ${qry} dose not exist`;
+      // console.trace();
       err(erStr, 1);
       return false;
    }
@@ -402,7 +330,6 @@ export function parse(tokens, environment) {
       // console.log("bun is processing: ", tokens);
       let evalStr = "";
       for (const token of tokens) {
-         console.log(token);
          if (token.type !== "EOF") {
             if (token.type === "func_call") {
                if (token.evaluated) {
