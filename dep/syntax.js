@@ -34,6 +34,7 @@ const operators = [
    ["...", "rest"],
    ["=>", "arrow"],
    ["<", "less_than"],
+   ["</", "less_than"],
    [">", "greater_than"],
    ["*", "star"],
 ];

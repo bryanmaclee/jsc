@@ -45,72 +45,6 @@
           ]
         },
         {
-          "value": "this",
-          "length": 4,
-          "type": "word",
-          "kind": "keyword",
-          "position": 29,
-          "line": 1,
-          "start_col": 29,
-          "end_col": 32,
-          "token_num": 14
-        },
-        {
-          "value": "is",
-          "length": 2,
-          "type": "word",
-          "kind": "identifier",
-          "position": 34,
-          "line": 1,
-          "start_col": 34,
-          "end_col": 35,
-          "token_num": 16
-        },
-        {
-          "value": "a",
-          "length": 1,
-          "type": "word",
-          "kind": "identifier",
-          "position": 37,
-          "line": 1,
-          "start_col": 37,
-          "end_col": 37,
-          "token_num": 18
-        },
-        {
-          "value": "div",
-          "length": 3,
-          "type": "word",
-          "kind": "identifier",
-          "position": 39,
-          "line": 1,
-          "start_col": 39,
-          "end_col": 41,
-          "token_num": 20
-        },
-        {
-          "value": "<",
-          "length": 1,
-          "type": "operator",
-          "kind": "less_than",
-          "position": 42,
-          "line": 1,
-          "start_col": 42,
-          "end_col": 42,
-          "token_num": 21
-        },
-        {
-          "value": "/",
-          "length": 1,
-          "type": "operator",
-          "kind": "forward_slash",
-          "position": 43,
-          "line": 1,
-          "start_col": 43,
-          "end_col": 43,
-          "token_num": 22
-        },
-        {
           "value": "div",
           "length": 3,
           "type": "word",
@@ -119,7 +53,7 @@
           "line": 1,
           "start_col": 44,
           "end_col": 46,
-          "token_num": 23
+          "token_num": 22
         },
         {
           "value": ">",
@@ -130,7 +64,7 @@
           "line": 1,
           "start_col": 47,
           "end_col": 47,
-          "token_num": 24
+          "token_num": 23
         }
       ]
     }

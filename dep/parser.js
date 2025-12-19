@@ -110,9 +110,9 @@ export function parse(tokens, log = false) {
       let found = false;
       const childAr = [];
       while (next && next.value !== "</") {
-         if (next.value === "</") found = true;
          childAr.push(next);
          next = eat();
+         if (next.value === "</") found = true;
       }
       if (!found) throw "didnt get it";
 
