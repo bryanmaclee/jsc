@@ -107,19 +107,42 @@ export function parse(tokens, log = false) {
          elAr.push(next);
          next = eat();
       }
+      const attribs = {};
+      elAr.reverse();
+      while (elAr.length) {
+         console.log(elAr);
+         let atom = elAr.pop();
+         if (elAr.length && elAr.at(-1).value === "=") {
+            elAr.pop();
+            attribs[atom.value] = elAr.pop().value;
+            continue;
+         }
+         attribs[atom.value] = true;
+         console.log(elAr);
+      }
+      next = eat();
       let found = false;
       const childAr = [];
-      while (next && next.value !== "</") {
-         childAr.push(next);
+      let context = "html";
+      let scp = 1;
+      let thing = false;
+      while (next && scp !== 0) {
+         // while (next && next.value !== "</") {
+         // if
+         console.log(next);
+         if (next.value === ">") {
+            let a;
+         } else if (next.value === "${") childAr.push(next);
          next = eat();
-         if (next.value === "</") found = true;
+         if (next.value === "</") scp--;
       }
       if (!found) throw "didnt get it";
 
       return {
          type: "element",
          kind: elType.value,
-         expr: elAr,
+         attributes: attribs,
+         expr: childAr,
       };
    }
 
