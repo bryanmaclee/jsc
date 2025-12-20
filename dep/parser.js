@@ -15,7 +15,6 @@ const eof = {
 };
 
 export function parse(tokens, log = false) {
-   // if (log) console.log(tokens);
    let scope = 0;
    let outStr = "";
    for (const token of tokens) {
@@ -43,13 +42,13 @@ export function parse(tokens, log = false) {
    }
 
    function eat(i = 1) {
-      while (tokens[iter]?.kind === "format") iter++;
+      while (tokens[iter]?.type === "format") iter++;
       iter += i;
       return tokens[iter - 1];
    }
 
    function at(i = 0) {
-      while (tokens[iter]?.kind === "format") iter++;
+      while (tokens[iter]?.type === "format") iter++;
       return tokens[iter + i];
    }
 
@@ -81,8 +80,7 @@ export function parse(tokens, log = false) {
                   }
                   break;
             }
-         case "white_space":
-         case "new_line":
+         case "format":
          case "string":
          case "operator":
             switch (token.kind) {
@@ -91,36 +89,87 @@ export function parse(tokens, log = false) {
                      return define(element, token);
                   }
                   break;
+               case "open_paren":
+                  return define(group, token);
             }
             break;
          default:
+            if (token.expr || token.length) return false;
             console.log("PARSER found unrecognized token: ", token);
             return false;
       }
    }
 
+   function group(token) {
+      const ar = [];
+      if (token.value === "(") {
+         token = eat();
+         while (token.value !== ")") {
+            ar.push(token);
+            token = eat();
+         }
+         eat();
+      }
+      // ar.push(eof);
+      return parse(ar);
+   }
+
    function element(token) {
-      let elAr = [];
+      const elAr = [];
+      const childAr = [];
       const elType = eat();
       let next = eat();
+
       while (next.value !== ">") {
          elAr.push(next);
          next = eat();
       }
-      let found = false;
-      const childAr = [];
+      next = eat();
+
       while (next && next.value !== "</") {
          childAr.push(next);
          next = eat();
-         if (next.value === "</") found = true;
       }
-      if (!found) throw "didnt get it";
+
+      childAr.push(eof);
 
       return {
          type: "element",
          kind: elType.value,
-         expr: elAr,
+         attributes: defineAttribs(elAr),
+         expr: parse(childAr),
       };
+
+      function defineAttribs(ar) {
+         let on = 0;
+         const attribs = [];
+         const at = {};
+         let attribKey;
+         let attribVal;
+         for (const a of ar) {
+            console.log(a.value, on, attribKey);
+            if (!on) {
+               attribKey = a.value;
+               console.log(attribKey, " doin struf");
+               on = 1;
+            } else if (on === 1) {
+               if (a.value === "=") {
+                  on = 2;
+               } else {
+                  console.log("yeah bitches");
+                  at[attribKey] = true;
+                  attribs.push(at);
+                  on = 0;
+               }
+            } else {
+               on = 0;
+               at[attribKey] = a.value;
+               attribs.push(at);
+            }
+         }
+         console.log(on);
+         return attribs;
+      }
    }
 
    function expect(thing) {

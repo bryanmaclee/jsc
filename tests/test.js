@@ -8,7 +8,11 @@ function one(n) {
 }
 const pre = one(2) + 1;
 BEGIN;
-const div = <div id="a_div">this is a div</div>;
+const div = (
+   <div id="a_div" nullAt>
+      <div nullAt>this is a div</div>
+   </div>
+);
 END;
 if (1 === 1) {
    console.log("yayyyyyyyyyyy!!!!!!");

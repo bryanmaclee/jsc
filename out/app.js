@@ -1,1 +1,1 @@
-const div = undefined div > ;
+const div = undefined ;

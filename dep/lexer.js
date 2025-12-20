@@ -96,11 +96,11 @@ export function tokenize(src) {
          inc();
          if (usefullVar === "l") {
             char = 1;
-            add(chunk, "new_line", "format");
+            add(chunk, "format", "new_line");
             lineStartPos = itter;
             line++;
          } else {
-            add(chunk, "white_space", "format");
+            add(chunk, "format", "white_space");
          }
          continue;
       } else if (operator.has(chunk)) {
