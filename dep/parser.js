@@ -111,7 +111,7 @@ export function parse(tokens, log = false) {
          eat();
       }
       // ar.push(eof);
-      return parse(ar);
+      return { type: "group", expr: parse(ar) };
    }
 
    function element(token) {
@@ -141,33 +141,15 @@ export function parse(tokens, log = false) {
       };
 
       function defineAttribs(ar) {
-         let on = 0;
-         const attribs = [];
-         const at = {};
-         let attribKey;
-         let attribVal;
-         for (const a of ar) {
-            console.log(a.value, on, attribKey);
-            if (!on) {
-               attribKey = a.value;
-               console.log(attribKey, " doin struf");
-               on = 1;
-            } else if (on === 1) {
-               if (a.value === "=") {
-                  on = 2;
-               } else {
-                  console.log("yeah bitches");
-                  at[attribKey] = true;
-                  attribs.push(at);
-                  on = 0;
-               }
+         const attribs = {};
+         for (let a = 0; a < ar.length; a++) {
+            if (a + 1 < ar.length && ar[a + 1].value === "=") {
+               attribs[ar[a].value] = ar[a + 2].value;
+               a += 2;
             } else {
-               on = 0;
-               at[attribKey] = a.value;
-               attribs.push(at);
+               attribs[ar[a].value] = true;
             }
          }
-         console.log(on);
          return attribs;
       }
    }

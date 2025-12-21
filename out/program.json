@@ -5,98 +5,103 @@
       "type": "const_declaration",
       "name": "div",
       "expr": [
-        [
-          {
-            "type": "element",
-            "kind": "div",
-            "attributes": [
-              {
-                "id": "\"a_div\""
-              }
-            ],
-            "expr": [
-              {
-                "type": "element",
-                "kind": "div",
-                "attributes": [],
-                "expr": [
-                  {
-                    "value": "this",
-                    "length": 4,
-                    "type": "word",
-                    "kind": "keyword",
-                    "position": 60,
-                    "line": 3,
-                    "start_col": 19,
-                    "end_col": 22,
-                    "token_num": 33
+        {
+          "type": "group",
+          "expr": [
+            {
+              "type": "element",
+              "kind": "div",
+              "attributes": {
+                "id": "\"a_div\"",
+                "nullAt": true
+              },
+              "expr": [
+                {
+                  "type": "element",
+                  "kind": "div",
+                  "attributes": {
+                    "nullAt": true,
+                    "id": "\"jon\""
                   },
-                  {
-                    "value": "is",
-                    "length": 2,
-                    "type": "word",
-                    "kind": "identifier",
-                    "position": 65,
-                    "line": 3,
-                    "start_col": 24,
-                    "end_col": 25,
-                    "token_num": 35
-                  },
-                  {
-                    "value": "a",
-                    "length": 1,
-                    "type": "word",
-                    "kind": "identifier",
-                    "position": 68,
-                    "line": 3,
-                    "start_col": 27,
-                    "end_col": 27,
-                    "token_num": 37
-                  },
-                  {
-                    "value": "div",
-                    "length": 3,
-                    "type": "word",
-                    "kind": "identifier",
-                    "position": 70,
-                    "line": 3,
-                    "start_col": 29,
-                    "end_col": 31,
-                    "token_num": 39
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "value": "div",
-            "length": 3,
-            "type": "word",
-            "kind": "identifier",
-            "position": 75,
-            "line": 3,
-            "start_col": 34,
-            "end_col": 36,
-            "token_num": 41
-          },
-          {
-            "value": ">",
-            "length": 1,
-            "type": "operator",
-            "kind": "greater_than",
-            "position": 78,
-            "line": 3,
-            "start_col": 37,
-            "end_col": 37,
-            "token_num": 42
-          },
-          {
-            "type": "element",
-            "kind": "div",
-            "attributes": [],
-            "expr": []
-          }
-        ]
+                  "expr": [
+                    {
+                      "value": "this",
+                      "length": 4,
+                      "type": "word",
+                      "kind": "keyword",
+                      "position": 79,
+                      "line": 4,
+                      "start_col": 10,
+                      "end_col": 13,
+                      "token_num": 47
+                    },
+                    {
+                      "value": "is",
+                      "length": 2,
+                      "type": "word",
+                      "kind": "identifier",
+                      "position": 84,
+                      "line": 4,
+                      "start_col": 15,
+                      "end_col": 16,
+                      "token_num": 49
+                    },
+                    {
+                      "value": "a",
+                      "length": 1,
+                      "type": "word",
+                      "kind": "identifier",
+                      "position": 87,
+                      "line": 4,
+                      "start_col": 18,
+                      "end_col": 18,
+                      "token_num": 51
+                    },
+                    {
+                      "value": "div",
+                      "length": 3,
+                      "type": "word",
+                      "kind": "identifier",
+                      "position": 89,
+                      "line": 4,
+                      "start_col": 20,
+                      "end_col": 22,
+                      "token_num": 53
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "div",
+              "length": 3,
+              "type": "word",
+              "kind": "identifier",
+              "position": 101,
+              "line": 5,
+              "start_col": 9,
+              "end_col": 11,
+              "token_num": 62
+            },
+            {
+              "value": ">",
+              "length": 1,
+              "type": "operator",
+              "kind": "greater_than",
+              "position": 104,
+              "line": 5,
+              "start_col": 12,
+              "end_col": 12,
+              "token_num": 63
+            },
+            {
+              "type": "element",
+              "kind": "div",
+              "attributes": {},
+              "expr": []
+            }
+          ]
+        }
       ]
     }
   ]

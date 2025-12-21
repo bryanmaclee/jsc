@@ -4,6 +4,7 @@ import err from "./error.js";
 const breaker = "\n";
 export function output(input) {
    let apStr = "";
+   const anon = elId();
    function run(inp) {
       for (const exp of inp.expr) {
          switch (exp.type) {
@@ -42,6 +43,12 @@ export function output(input) {
             case "func_call":
                func_call(exp);
                break;
+            case "element":
+               element(exp);
+               break;
+            case "group":
+               group(exp);
+               break;
             case "EOF":
                break;
             default:
@@ -49,8 +56,18 @@ export function output(input) {
          }
       }
    }
+
    run(input);
    return apStr;
+
+   function group(exp) {
+      run(exp);
+   }
+
+   function element(exp) {
+      // console.log(exp);
+      apStr += `${anon.next(exp.kind).value} = document.createElement("${exp.kind}");\n`;
+   }
 
    function func_call(exp) {
       apStr += exp.name + "(";
@@ -87,5 +104,12 @@ export function output(input) {
       apStr += exp.name + "(" + exp.params.toString() + "){" + breaker;
       run(exp);
       apStr += "}\n";
+   }
+}
+
+function* elId(type) {
+   let id = 0;
+   while (1) {
+      yield `${type}${id++}`;
    }
 }

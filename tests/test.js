@@ -10,7 +10,9 @@ const pre = one(2) + 1;
 BEGIN;
 const div = (
    <div id="a_div" nullAt>
-      <div nullAt>this is a div</div>
+      <div nullAt id="jon">
+         this is a div
+      </div>
    </div>
 );
 END;
