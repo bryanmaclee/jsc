@@ -36,9 +36,6 @@ async function main() {
    const dataStr = await Bun.file(Files.testFile());
    const byts = await dataStr.bytes();
    let theStr = "";
-   // for (const al of byts) {
-   //    theStr += String.fromCharCode(al);
-   // }
    theStr += String.fromCharCode(...byts);
    console.log(theStr);
 }
