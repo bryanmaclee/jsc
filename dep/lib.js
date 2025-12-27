@@ -30,7 +30,7 @@ export function truncateInput(datastr) {
 const args = process.argv.slice(2);
 
 export const Files = {
-   inTest: "./tests/test.js",
+   inTest: "./tests/test.s",
    outputFile: "out/program.json",
    outputText: "out/tokens.json",
    outputTrunk: "out/truncated.json",

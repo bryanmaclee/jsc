@@ -1,0 +1,57 @@
+const BEGIN = 1;
+const END = 1;
+function one(n) {
+   function two(m) {
+      return m + 1;
+   }
+   return n + two(1);
+}
+const pre = one(2) + 1;
+BEGIN;
+const div = 
+   <div id="a_div" nullAt>
+      <div nullAt id="jon">
+         this is a div
+      </div>
+   </div>
+;
+END;
+if (1 === 1) {
+   console.log("yayyyyyyyyyyy!!!!!!");
+}
+let u = 4;
+const p = 3;
+let e = "str" + "ing";
+
+// const a = d + 2;
+// const b = 2 + 2 + d;
+
+// function userCard() {
+//    //function 'would' be `replaced` by "component"
+//    <div style={styles.card}>
+//       <img src={userCard.avatar} alt={userCard.name} />
+//       <h2>{userCard.name}</h2>
+//       <p>{userCard.email}</p>
+//       <button style={styles.button}>View Profile</button>
+//    </div>;
+//
+//    // <p>yo</p>
+// // new comment
+//    const styles = {
+//       border: "2px solid purple",
+//    };
+// }
+//
+// <userCard name="Alice" email="alice@example.com" avatar="/avatar.png" />;
+// const alfa = 1 + 4 * 2 - (1 + 1);
+// const beta = alfa * 2;
+// let charlie = beta * beta;
+// function dodat(g, h) {
+//    function doit(e, f) {
+//       let a = 1 + 2 * 2;
+//       const b = (c =  2);
+//    }
+// }
+// const f = d + 1;
+// var c = a * b;
+//    lin d = 1;

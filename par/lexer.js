@@ -1,8 +1,29 @@
-import { Tokens, operator } from "./syntax.js";
-import { access } from "./lib.js";
+import { Tokens, operator } from "../dep/syntax.js";
+import { access } from "../dep/lib.js";
+//
+self.onmessage = (ev) => {
+   // console.log(ev.data);
+   // try {
+   //    tone.dothing();
+   // } catch {
+   //    process.exit;
+   // }
+   // console.log(Tokens);
+   // postMessage("hello main thread");
+   // console.log(ev.data);
+   // const tokens = tokenize(ev.data);
+   // const str = String.fromCharCode(...ev.data);
+   // console.log(str);
+   // const tokens = tokenize(ev.data);
+   tokenize(ev.data);
+   // console.log("print the tokens", tokens);
+   postMessage(tokens);
+   process.exit();
+};
+// self.terminate();
 
-export function tokenize(src) {
-   const tokens = [];
+const tokens = [];
+function tokenize(src) {
    let itter = 0;
    let startCol = 1;
    let char = 1;
@@ -54,7 +75,7 @@ export function tokenize(src) {
    }
 
    function add(value, type, kind, addTok = true) {
-      access.tokens.push({
+      const token = {
          value,
          length: value.length,
          type,
@@ -64,10 +85,12 @@ export function tokenize(src) {
          start_col: char - value.length,
          end_col: char - 1,
          token_num: addTok ? ++tokenNumber : null,
-      });
+      };
+      // access.tokens.push(token);
+      // return token;
+      tokens.push(token);
    }
 
-   console.log(src);
    while (itter < src.length) {
       let chunk = "";
       let usefullVar;
@@ -96,17 +119,18 @@ export function tokenize(src) {
          inc();
          if (usefullVar === "l") {
             char = 1;
-            add(chunk, "new_line", "format");
+            add(chunk, "format", "new_line");
             lineStartPos = itter;
             line++;
          } else {
-            add(chunk, "white_space", "format");
+            add(chunk, "format", "white_space");
          }
          continue;
       } else if (operator.has(chunk)) {
          inc();
-         if (chunk === '"') {
-            while (c() !== '"') {
+         if (chunk === '"' || chunk === "'") {
+            let quoteType = chunk;
+            while (c() !== quoteType) {
                chunk += c();
                inc();
             }
@@ -119,7 +143,7 @@ export function tokenize(src) {
             chunk += c();
             inc();
          }
-         add(chunk, operator.get(chunk), "operator");
+         add(chunk, "operator", operator.get(chunk));
          continue;
       }
       console.error(
